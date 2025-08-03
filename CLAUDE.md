@@ -1,134 +1,131 @@
-# CLAUDE.md
+# CLAUDE.md - Monorepo
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with this B2B monorepo at the repository level.
 
-## Development Environment Setup
+## Monorepo Overview
 
-This is a B2B monorepo with Ruby on Rails backend managed by MISE. The project uses Rails 8.0.2 with Ruby 3.4.5 and PostgreSQL 16.
+This is a B2B monorepo with a Ruby on Rails backend. The project structure allows for future additions of frontend applications, microservices, or other components.
 
-### Ruby Version Management
-- Uses **MISE** (not rbenv) for Ruby version management
-- Ruby 3.4.5 is specified in `backend/.ruby-version` 
-- MISE automatically activates the correct Ruby version when entering the backend directory
-- If Ruby version issues occur, ensure MISE is properly configured: `mise settings add idiomatic_version_file_enable_tools ruby`
-
-### Database Architecture
-- **PostgreSQL 16** runs in Docker container via `docker-compose.yml`
-- **Solid adapters** for cache, queue, and cable (no Redis dependency)
-- Database configs in `backend/config/database.yml` use hardcoded credentials for development
-- Production config still references SQLite (needs updating for production deployment)
-
-## Common Development Commands
-
-### Starting Services
-```bash
-# Start PostgreSQL (from repo root)
-docker-compose up -d
-
-# Start Rails server (from backend/)
-cd backend
-rails server
-```
-
-### Database Operations
-```bash
-cd backend
-rails db:create          # Create databases
-rails db:migrate         # Run migrations
-rails db:reset           # Drop, create, and migrate
-rails tmp:clear          # Clear Rails cache
-```
-
-### Testing and Quality
-```bash
-cd backend
-bundle exec rspec        # Run tests (if RSpec is added)
-bundle exec rubocop     # Run linter
-bundle exec brakeman    # Security analysis
-```
-
-### Dependency Management
-```bash
-cd backend
-bundle install          # Install gems
-bundle update           # Update gems
-```
-
-## Architecture Overview
-
-### Monorepo Structure
+### Repository Structure
 ```
 b2b-monorepo/
-├── docker-compose.yml   # PostgreSQL service only
-├── backend/             # Rails 8 application
+├── docker-compose.yml   # Infrastructure dependencies: PostgreSQL service
+├── backend/             # Rails 8 application (see backend/CLAUDE.md)
+├── .github/             # CI/CD workflows
 └── README.md           # Setup instructions
 ```
 
-### Rails Application Structure
-- **Standard Rails 8 setup** with Solid adapters replacing Redis
-- **Health check endpoint** at `/health` with database connectivity verification
-- **PostgreSQL integration** for all persistence needs
-- **Dockerized development** environment for external services
-
 ### Key Architectural Decisions
-1. **MISE over rbenv**: Project uses MISE for Ruby version management
-2. **Solid over Redis**: Uses Rails 8's solid_cache, solid_queue, solid_cable instead of Redis
-3. **PostgreSQL-first**: All data persistence goes through PostgreSQL
-4. **Monorepo structure**: Backend is subdirectory, allowing for future frontend additions
+1. **Monorepo structure**: Centralized codebase with potential for multiple applications
+2. **Dockerized services**: External dependencies managed via Docker Compose
+3. **Modern tooling**: GitHub Actions for CI/CD, MISE for development environment management
 
-### Health Monitoring
-- Custom health endpoint at `GET /health` returns detailed JSON status
-- Includes database connectivity check via `SELECT 1` query
-- Returns appropriate HTTP status codes (200 for healthy, 503 for unhealthy)
-- Structured response includes service info, timestamp, and individual check results
+## Infrastructure Services
+
+### PostgreSQL Database
+- **PostgreSQL 16** runs in Docker container via `docker-compose.yml`
+- Shared database service for all applications in the monorepo
+- Development credentials hardcoded in docker-compose for simplicity
+
+### Docker Services Management
+```bash
+# Start all services
+docker-compose up -d
+
+# Check service status
+docker-compose ps
+
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs postgres
+```
+
+## Project Management
+
+### Task Management
+- **Linear integration**: Use Linear MCP server to track tasks and issues
+- Tasks are managed through Linear workspace with proper status tracking
+- Use `mcp__linear-server__*` tools to interact with Linear API
+
+#### Linear Task Structure
+Every Linear task should follow this structured format for consistency and clarity:
+
+**Description**
+Clear, concise explanation of what needs to be accomplished
+
+**Specs de la tarea**
+Functional specifications and acceptance criteria
+
+**Descripción técnica**
+Technical implementation details, approach, and considerations
+
+**Example: PINTY-50**
+```
+Configurar la estructura inicial del proyecto, incluyendo la configuración básica y dependencias.
+
+## Specs de la tarea
+
+### 1. Arrancar el proyecto 
+
+Seguir el readme para arrancar el proyecto, ejecutar endpoint /healthy ha de retornar OK.
+
+Test por curl
+
+cd backend && rails s
+
+En otro terminal.
+
+curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/health && echo " - OK" || echo " - ERROR"
+
+### 2. Repositorio accesible en Github
+
+Se ha de poder acceder al proyecto privado por Github con un Readme de con la descripción del proyecto.
+
+Repositorio: https://github.com/artero/b2b-monorepo
+
+### Descripción técnica
+
+- Inicialización del proyecto usando MISE (Esta herramienta es como rbenv y npm pero para todos los lenguajes)
+- Inicializar proyecto Rails 8 en  b2b/backend (Esctuctura Monorepo)
+- Instalación Infra con docker-compose, ultimas versiones de:
+- Solo PostgreSQLRails: Configurado para PostgreSQL + Solid adapters
+- Ventajas de Solid: Cache, Jobs y Cable en DB sin dependencias externas
+- Crear endpoint health que valide que rails, 
+- Readme ha de explicar dependencias, y como arrancar el proyecto en desarrollo.
+- Commit inicial y push a nuevo repo privado de GitHub b2b-monorepo
+
+```
+
+### Version Control  
+- **GitHub repository**: Primary code hosting and collaboration platform
+- **GitHub Actions CI/CD**: Automated testing and deployment pipeline at `.github/workflows/ci.yml`
+- **Branch strategy**: Feature branches merged to main via pull requests
+
+### CI/CD Pipeline
+- **Linting**: RuboCop with parallel execution for code style
+- **Security**: Brakeman security analysis
+- **Testing**: Rails test suite with PostgreSQL service
+- **System tests**: Capybara + Selenium integration tests
+- **Database**: PostgreSQL 16 Alpine container with health checks
+
+## Tool Integration
+
+### Available Tools
+- **Linear MCP**: Task management and issue tracking via `mcp__linear-server__*` tools
+- **GitHub CLI**: Repository operations via `gh` command
+- **Docker**: Service management via `docker-compose`
+- **MISE**: Development environment management
+
+### Working with Applications
+- **Backend Rails app**: See `backend/CLAUDE.md` for Rails-specific guidance
+- **Future applications**: Will have their own CLAUDE.md files in respective directories
 
 ## Development Workflow
 
-### Starting Development
-1. Ensure Docker is running and start PostgreSQL: `docker-compose up -d`
-2. Navigate to backend: `cd backend` (MISE will auto-activate Ruby 3.4.5)
-3. Install dependencies: `bundle install`
-4. Setup database: `rails db:create db:migrate`
-5. Start server: `rails server`
-
-### Adding New Features
-- Controllers go in `backend/app/controllers/`
-- Models use PostgreSQL via ActiveRecord
-- Routes defined in `backend/config/routes.rb`
-- Database changes via `rails generate migration`
-
-### Common Issues
-- **Ruby version errors**: Ensure MISE is activated and configured
-- **Database connection errors**: Verify PostgreSQL container is running
-- **Port conflicts**: Rails runs on 3000, PostgreSQL on 5432
-- **Bundler version conflicts**: Remove Gemfile.lock and re-run bundle install
-
-## Testing Strategy
-
-The project includes test setup with:
-- **Rails testing framework** (standard)
-- **Capybara + Selenium** for system tests
-- **Debug gem** for development debugging
-- **Brakeman** for security analysis
-- **RuboCop** for code style (Rails Omakase config)
-
-## Deployment Considerations
-
-- **Kamal** gem included for containerized deployment
-- **Thruster** gem for production HTTP optimization
-- Production database configuration needs updating (currently references SQLite)
-- Health check endpoint suitable for load balancer monitoring
-
-## Development commands in backend
-
-To run lint with rubocop:
-```bash
-cd backend
-rubocop
-```
-
-## Tasks
-
-We manage the tasks uslig linear, you can use the linear mcp server to get information of the finished tasks and the pending tasks.
-
-We are using github to manage the repository.
+### Repository-Level Operations
+1. Start infrastructure services: `docker-compose up -d`
+2. Navigate to specific application directory for development
+3. Use GitHub CLI for repository-level operations (PRs, issues, etc.)
+4. Use Linear tools for task management across the entire project
