@@ -414,7 +414,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  activeadmin (~> 4.0.0.beta15)
+  activeadmin (= 4.0.0.beta16)
   bootsnap
   brakeman
   capybara

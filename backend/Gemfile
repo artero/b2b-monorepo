@@ -19,7 +19,7 @@ gem "jbuilder"
 
 # Authentication and Admin Interface
 gem "devise"
-gem "activeadmin", "~> 4.0.0.beta15"
+gem "activeadmin", "4.0.0.beta16"
 
 # CSS bundling and TailwindCSS for ActiveAdmin 4.0
 gem "cssbundling-rails"
