@@ -96,6 +96,9 @@ node_modules/
 /public/packs-test
 /public/assets
 
+# Ignore built CSS files
+backend/app/assets/builds/
+
 # Ignore yarn files
 /yarn-error.log
 yarn-debug.log*

@@ -59,15 +59,18 @@ docker-compose ps
 ```bash
 cd backend
 
-# Install dependencies
+# Install Ruby dependencies
 bundle install
+
+# Install JavaScript dependencies
+yarn install
 
 # Create and migrate database
 rails db:create
 rails db:migrate
 
-# Start server
-rails server
+# Start server with asset compilation
+bin/dev
 ```
 
 ## 🏃‍♂️ Development Commands
@@ -77,9 +80,9 @@ rails server
 # 1. Start PostgreSQL
 docker-compose up -d
 
-# 2. Start Rails (in another terminal)
+# 2. Start Rails with asset compilation (in another terminal)
 cd backend
-rails server
+bin/dev
 ```
 
 ### Check status
@@ -89,7 +92,7 @@ rails server
 
 ### Stop services
 ```bash
-# Stop Rails: Ctrl+C in terminal
+# Stop Rails and asset compilation: Ctrl+C in terminal
 
 # Stop PostgreSQL
 docker-compose down
