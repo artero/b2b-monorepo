@@ -6,7 +6,8 @@ ActiveAdmin.setup do |config|
   # by extracting the _site_header partial into your project
   # to use your own logo, styles, etc.
   #
-  config.site_title = "Backend"
+  config.site_title = "B2B Admin"
+  config.site_title_link = "b2b_logo.png"
 
   # == Load Paths
   #
