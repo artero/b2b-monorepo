@@ -15,11 +15,19 @@ if Rails.env.development?
   end
 
   # create 10 AdminUser records
-  10.times do |i|
+  5.times do |i|
     AdminUser.find_or_create_by!(email: "admin_#{i}@example.com") do |user|
       user.password = 'password'
       user.password_confirmation = 'password'
       user.super_admin = false
+    end
+  end
+
+  5.times do |i|
+    AdminUser.find_or_create_by!(email: "superadmin_#{i}@example.com") do |user|
+      user.password = 'password'
+      user.password_confirmation = 'password'
+      user.super_admin = true
     end
   end
 end
