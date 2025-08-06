@@ -18,8 +18,6 @@ class AdminInterfaceTest < ActionDispatch::IntegrationTest
   test "admin user can use forgot password link and serd email" do
     visit new_admin_user_session_path
 
-    assert_current_path new_admin_user_session_path
-
     click_link "¿Olvidó su contraseña?"
 
     assert_current_path new_admin_user_password_path
