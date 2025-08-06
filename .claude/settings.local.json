@@ -6,6 +6,7 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:guides.rubyonrails.org)",
+      "WebFetch(domain:activeadmin.info)",
       "Bash(gh run view:*)", 
       "Bash(grep:*)"
     ],

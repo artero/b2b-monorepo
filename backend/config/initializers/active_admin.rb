@@ -72,6 +72,8 @@ ActiveAdmin.setup do |config|
   # refer to the documentation.
   # config.authorization_adapter = ActiveAdmin::CanCanAdapter
   # config.authorization_adapter = ActiveAdmin::PunditAdapter
+  require_relative '../../lib/admin_authorization_adapter'
+  config.authorization_adapter = AdminAuthorizationAdapter
 
   # In case you prefer Pundit over other solutions you can here pass
   # the name of default policy class. This policy will be used in every
