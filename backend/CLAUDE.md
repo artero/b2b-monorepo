@@ -25,8 +25,8 @@ This Rails 8.0.2 application uses Ruby 3.4.5 managed by MISE and PostgreSQL 16 f
 # Start PostgreSQL (from repo root)
 cd .. && docker-compose up -d
 
-# Start Rails server
-rails server
+# Start Rails server with asset compilation
+bin/dev
 ```
 
 ### Database Operations
@@ -46,7 +46,8 @@ brakeman                # Security analysis
 
 ### Dependency Management
 ```bash
-bundle install          # Install gems
+bundle install          # Install Ruby gems
+yarn install            # Install JavaScript dependencies
 bundle update           # Update gems
 ```
 
@@ -70,9 +71,9 @@ bundle update           # Update gems
 
 ### Starting Development
 1. Ensure Docker is running and start PostgreSQL: `cd .. && docker-compose up -d`
-2. Install dependencies: `bundle install`
+2. Install dependencies: `bundle install && yarn install`
 3. Setup database: `rails db:create db:migrate`
-4. Start server: `rails server`
+4. Start server with asset compilation: `bin/dev`
 
 ### Adding New Features
 - Controllers go in `app/controllers/`

@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "mcp__linear-server__list_my_issues",
-      "mcp__linear-server__get_issue"
+      "mcp__linear-server__get_issue",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:guides.rubyonrails.org)",
+      "WebFetch(domain:activeadmin.info)",
+      "Bash(gh run view:*)", 
+      "Bash(grep:*)"
     ],
     "deny": []
   }
