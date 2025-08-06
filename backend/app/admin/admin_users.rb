@@ -33,8 +33,9 @@ ActiveAdmin.register AdminUser do
       item I18n.t("active_admin.view"), admin_admin_user_path(admin_user), class: "member_link view_link"
       if current_admin_user&.super_admin? || current_admin_user == admin_user
         item I18n.t("active_admin.edit"), edit_admin_admin_user_path(admin_user), class: "member_link edit_link"
-        item I18n.t("active_admin.delete"), admin_admin_user_path(admin_user), method: :delete,
-             confirm: I18n.t("active_admin.delete_confirmation"), class: "member_link delete_link"
+        item I18n.t("active_admin.delete"), admin_admin_user_path(admin_user),
+             method: :delete, class: "member_link delete_link",
+             data: { confirm: I18n.t("active_admin.delete_confirmation") }
       end
     end
   end
