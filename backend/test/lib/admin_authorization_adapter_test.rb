@@ -3,8 +3,7 @@ require "test_helper"
 class AdminAuthorizationAdapterTest < ActiveSupport::TestCase
   def setup
     @regular_admin = admin_users(:one)
-    @super_admin = admin_users(:two)
-    @super_admin.update!(super_admin: true)
+    @super_admin = admin_users(:super_admin)
   end
 
   # Tests for AdminUser subject
@@ -77,7 +76,7 @@ class AdminAuthorizationAdapterTest < ActiveSupport::TestCase
   # Tests for non-AdminUser subjects
   test "allows all actions on non-AdminUser subjects" do
     adapter = AdminAuthorizationAdapter.new(nil, @regular_admin)
-    
+
     # Test with various subjects
     assert adapter.authorized?(:read, "SomeOtherResource")
     assert adapter.authorized?(:create, "SomeOtherResource")
@@ -88,7 +87,7 @@ class AdminAuthorizationAdapterTest < ActiveSupport::TestCase
 
   test "allows all actions on non-AdminUser subjects for super admin" do
     adapter = AdminAuthorizationAdapter.new(nil, @super_admin)
-    
+
     assert adapter.authorized?(:read, "SomeOtherResource")
     assert adapter.authorized?(:create, "SomeOtherResource")
     assert adapter.authorized?(:update, "SomeOtherResource")
@@ -99,16 +98,16 @@ class AdminAuthorizationAdapterTest < ActiveSupport::TestCase
   # Tests for nil user
   test "handles nil user gracefully" do
     adapter = AdminAuthorizationAdapter.new(nil, nil)
-    
+
     # Should deny AdminUser actions when user is nil
     refute adapter.authorized?(:create, AdminUser)
     refute adapter.authorized?(:destroy, AdminUser)
     refute adapter.authorized?(:update, AdminUser)
     refute adapter.authorized?(:custom_action, AdminUser)
-    
+
     # Should still allow read access
     assert adapter.authorized?(:read, AdminUser)
-    
+
     # Should allow non-AdminUser subjects
     assert adapter.authorized?(:read, "SomeOtherResource")
   end
@@ -116,7 +115,7 @@ class AdminAuthorizationAdapterTest < ActiveSupport::TestCase
   # Edge cases
   test "handles nil subject gracefully" do
     adapter = AdminAuthorizationAdapter.new(nil, @regular_admin)
-    
+
     # Should allow nil subject (non-AdminUser case)
     assert adapter.authorized?(:read, nil)
     assert adapter.authorized?(:create, nil)
@@ -124,7 +123,7 @@ class AdminAuthorizationAdapterTest < ActiveSupport::TestCase
 
   test "handles empty subject gracefully" do
     adapter = AdminAuthorizationAdapter.new(nil, @regular_admin)
-    
+
     # Should allow empty subject (non-AdminUser case)
     assert adapter.authorized?(:read, "")
     assert adapter.authorized?(:create, "")

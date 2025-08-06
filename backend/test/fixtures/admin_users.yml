@@ -8,6 +8,11 @@ two:
   email: admin2@example.com
   encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'password123') %>
 
+super_admin:
+  email: super_admin@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'password123') %>
+  super_admin: true
+
 login_test_admin:
   email: login_test_admin@example.com
   encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'password123') %>
