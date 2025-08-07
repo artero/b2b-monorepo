@@ -234,11 +234,29 @@ docker-compose ps
 curl -s http://localhost:3000/health | jq '.status'
 ```
 
+## 📧 Email Development
+
+### Letter Opener
+In development, emails are automatically opened in your browser using the `letter_opener` gem instead of being sent to real email addresses.
+
+**Features:**
+- All sent emails open automatically in your default browser
+- Emails are stored locally in `tmp/letter_opener/`
+- No email configuration needed for development
+- Works with all Rails mailers (user registration, password reset, etc.)
+
+**Usage:**
+1. Trigger any action that sends an email (registration, password reset, etc.)
+2. Email will automatically open in your browser
+3. View previously sent emails by browsing to `http://localhost:3000/letter_opener` (if available) or check `tmp/letter_opener/` directory
+
+
 ## 📝 Additional Notes
 
 - **Ruby version**: Controlled by `.ruby-version` in the `backend/` directory
 - **Database**: PostgreSQL runs on port 5432 (only accessible from localhost)
 - **Logs**: Located in `backend/log/development.log`
 - **Cache**: Cleared automatically, but you can force with `rails tmp:clear`
+- **Emails**: Development emails open in browser via `letter_opener` gem
 
 For more information about Rails 8, check the [official documentation](https://guides.rubyonrails.org/).
