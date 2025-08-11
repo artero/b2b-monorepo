@@ -35,10 +35,13 @@ class CustomerUser < ApplicationRecord
     raw, hashed = Devise.token_generator.generate(CustomerUser, :reset_password_token)
     self.reset_password_token = hashed
     self.reset_password_sent_at = Time.now.utc
-    self.save
 
-    # TODO: Implementar CustomerUserMailer personalizado
-    # CustomerUserMailer.password_generation_instructions(self, raw).deliver_now
+    if self.save
+      CustomerUserMailer.password_generation_instructions(self, raw).deliver_now
+      true
+    else
+      false
+    end
   end
 
   def self.create_without_password(attributes)

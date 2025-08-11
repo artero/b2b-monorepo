@@ -55,14 +55,14 @@ ActiveAdmin.register CustomerUser do
         link_to user.customer.name, admin_customer_path(user.customer)
       end
       row :blocked do |user|
-        status_tag(user.blocked? ? "Blocked" : "Active", user.blocked? ? "error" : "ok")
+        # status_tag(user.blocked? ? "Blocked" : "Active", user.blocked? ? "error" : "ok")
       end
       row "Password Status" do |user|
-        if user.encrypted_password.present?
-          status_tag "Password Set", "ok"
-        else
-          status_tag "Password Pending", "warning"
-        end
+        # if user.encrypted_password.present?
+        #   status_tag "Password Set", "ok"
+        # else
+        #   status_tag "Password Pending", "warning"
+        # end
       end
       row :reset_password_sent_at do |user|
         user.reset_password_sent_at&.strftime("%B %d, %Y at %I:%M %p")
