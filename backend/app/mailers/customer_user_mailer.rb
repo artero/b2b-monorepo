@@ -1,5 +1,5 @@
 class CustomerUserMailer < ApplicationMailer
-  default from: 'noreply@company.com'
+  default from: "noreply@company.com"
 
   # Send password generation instructions to customer user
   def password_generation_instructions(customer_user, token)
@@ -10,7 +10,7 @@ class CustomerUserMailer < ApplicationMailer
 
     mail(
       to: @customer_user.email,
-      subject: 'Genera tu contraseña - Acceso al sistema'
+      subject: "Genera tu contraseña - Acceso al sistema"
     )
   end
 end

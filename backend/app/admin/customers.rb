@@ -58,7 +58,7 @@ ActiveAdmin.register Customer do
           link_to "View", admin_customer_user_path(user), class: "button"
         end
       end
-      
+
       if customer.customer_users.empty?
         div class: "blank_slate_container" do
           span class: "blank_slate" do
@@ -74,13 +74,13 @@ ActiveAdmin.register Customer do
   # Form
   form do |f|
     f.semantic_errors(*f.object.errors.attribute_names)
-    
+
     f.inputs "Customer Information" do
       f.input :name, required: true, hint: "Company or organization name"
       f.input :code, required: true, hint: "Unique customer code (e.g., ACME001)"
       f.input :email, hint: "Optional customer contact email"
     end
-    
+
     f.actions
   end
 

@@ -35,8 +35,8 @@ ActiveAdmin.register CustomerUser do
     end
     actions do |user|
       unless user.encrypted_password.present?
-        item "Generate Password", generate_password_admin_customer_user_path(user), 
-             method: :post, class: "button", 
+        item "Generate Password", generate_password_admin_customer_user_path(user),
+             method: :post, class: "button",
              data: { confirm: "Send password generation email to #{user.email}?" }
       end
     end
@@ -74,12 +74,12 @@ ActiveAdmin.register CustomerUser do
     panel "Actions" do
       div do
         unless resource.encrypted_password.present?
-          link_to "Generate Password", generate_password_admin_customer_user_path(resource), 
-                  method: :post, class: "button", 
+          link_to "Generate Password", generate_password_admin_customer_user_path(resource),
+                  method: :post, class: "button",
                   data: { confirm: "Send password generation email to #{resource.email}?" }
         else
-          link_to "Resend Password Instructions", generate_password_admin_customer_user_path(resource), 
-                  method: :post, class: "button", 
+          link_to "Resend Password Instructions", generate_password_admin_customer_user_path(resource),
+                  method: :post, class: "button",
                   data: { confirm: "Resend password generation email to #{resource.email}?" }
         end
       end
@@ -89,7 +89,7 @@ ActiveAdmin.register CustomerUser do
   # Form
   form do |f|
     f.semantic_errors(*f.object.errors.attribute_names)
-    
+
     f.inputs "User Information" do
       f.input :name, required: true
       f.input :surname, required: true
@@ -98,8 +98,8 @@ ActiveAdmin.register CustomerUser do
     end
 
     f.inputs "Customer Assignment" do
-      f.input :customer, as: :select, 
-              collection: Customer.order(:name).collect { |c| [c.name, c.id] }, 
+      f.input :customer, as: :select,
+              collection: Customer.order(:name).collect { |c| [ c.name, c.id ] },
               required: true,
               hint: "Select the customer this user belongs to"
     end
@@ -126,7 +126,7 @@ ActiveAdmin.register CustomerUser do
     def create
       # Use the custom method that doesn't require a password
       @customer_user = CustomerUser.create_without_password(permitted_params[:customer_user])
-      
+
       if @customer_user.persisted?
         # Send password generation email after creation
         @customer_user.send_password_generation_instructions

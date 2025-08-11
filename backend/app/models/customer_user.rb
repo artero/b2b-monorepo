@@ -10,17 +10,17 @@ class CustomerUser < ApplicationRecord
   validates :surname, presence: true
   validates :email, presence: true, uniqueness: true
   validates :customer_id, presence: true
-  validates :blocked, inclusion: { in: [true, false] }
+  validates :blocked, inclusion: { in: [ true, false ] }
 
   scope :active, -> { where(blocked: false) }
   scope :blocked, -> { where(blocked: true) }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["blocked", "created_at", "customer_id", "email", "id", "name", "phone_number", "surname", "updated_at"]
+    [ "blocked", "created_at", "customer_id", "email", "id", "name", "phone_number", "surname", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["customer"]
+    [ "customer" ]
   end
 
   def full_name
@@ -51,10 +51,10 @@ class CustomerUser < ApplicationRecord
       password: temp_password,
       password_confirmation: temp_password
     ))
-    
+
     if user.save
       # Clear the password after saving - user will set it via "Generate Password"
-      user.update_columns(encrypted_password: '')
+      user.update_columns(encrypted_password: "")
       user
     else
       user

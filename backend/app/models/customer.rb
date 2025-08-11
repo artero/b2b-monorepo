@@ -7,10 +7,10 @@ class Customer < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, if: :email?
 
   def self.ransackable_attributes(auth_object = nil)
-    ["code", "created_at", "email", "id", "name", "updated_at"]
+    [ "code", "created_at", "email", "id", "name", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["customer_users"]
+    [ "customer_users" ]
   end
 end
