@@ -1,4 +1,4 @@
-class CustomerUsers::PasswordsController < Devise::PasswordsController
+class CustomerUsers::GeneratePasswordsController < Devise::PasswordsController
   # Override the edit action to ensure it uses our custom view
   def edit
     super
@@ -22,3 +22,4 @@ class CustomerUsers::PasswordsController < Devise::PasswordsController
     new_customer_user_session_path
   end
 end
+

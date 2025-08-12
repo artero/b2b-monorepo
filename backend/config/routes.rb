@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :customer_users, path: 'customer_users', controllers: {
-    passwords: 'customer_users/passwords'
-  }
+  devise_for :customer_users, path: "customer_user"
+
+  devise_scope :customer_user do
+    resource :generate_passwords, controller: "customer_users/generate_passwords", except: [ :show ]
+  end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
