@@ -5,11 +5,11 @@ class CustomerUserMailer < ApplicationMailer
     @customer_user = customer_user
     @customer = customer_user.customer
     @token = token
-    @reset_password_url = edit_generate_passwords_url(reset_password_token: @token)
+    @generate_password_url = edit_generate_passwords_url(reset_password_token: @token)
 
     mail(
       to: @customer_user.email,
       subject: "Genera tu contraseña - Acceso al sistema"
     )
   end
-endGeneratePasswordsController
+end
