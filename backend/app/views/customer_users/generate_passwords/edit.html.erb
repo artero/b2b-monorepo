@@ -1,69 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Generar Contraseña - Sistema</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            'system': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="font-system bg-gradient-to-br from-indigo-500 to-purple-600 min-h-screen flex items-center justify-center p-5">
-  <div class="bg-white rounded-xl shadow-2xl p-10 w-full max-w-md">
-    <div class="text-center mb-8">
-      <h1 class="text-gray-800 text-3xl font-semibold mb-3">Generar Contraseña</h1>
-      <p class="text-gray-600">Configura tu contraseña para acceder a <br><b>Pintyplus B2B</b></p>
-    </div>
-    
-    <%= form_for(resource, as: resource_name, url: generate_passwords_path, html: { method: :put }) do |f| %>
-      <% if resource.errors.any? %>
-        <div class="bg-red-50 text-red-800 p-4 rounded-lg mb-5 border border-red-200 text-sm">
-          <ul class="pl-2 space-y-1">
-            <% resource.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      
-      <%= hidden_field_tag :reset_password_token, params[:reset_password_token] %>
+<% content_for :title, "Generate password Pintyplus B2B" %>
 
-      <div class="mb-5">
-        <%= f.label :password, "Nueva Contraseña", class: "block mb-2 text-sm font-medium text-gray-800" %>
-        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", 
-                           placeholder: "Ingresa tu nueva contraseña", 
-                           class: "w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors duration-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" %>
-        <% if @minimum_password_length %>
-          <div class="rounded-md mt-1 text-xs text-gray-600">
-            <strong>Requisitos:</strong> Mínimo <%= @minimum_password_length %> caracteres. 
-          </div>
-        <% end %>
-      </div>
-
-      <div class="mb-5">
-        <%= f.label :password_confirmation, "Confirmar Contraseña", class: "block mb-2 text-sm font-medium text-gray-800" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password",
-                           placeholder: "Confirma tu contraseña", 
-                           class: "w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors duration-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" %>
-      </div>
-
-      <div class="text-center mt-8">
-        <%= f.submit "Establecer mi contraseña", class: "w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white px-8 py-3 rounded-lg text-base font-semibold cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+<div class="bg-white rounded-xl shadow-2xl p-10 w-full max-w-md">
+  <div class="text-center mb-8">
+    <h1 class="text-gray-800 text-3xl font-semibold mb-3">Generar Contraseña</h1>
+    <p class="text-gray-600">Configura tu contraseña para acceder a <br><b>Pintyplus B2B</b></p>
+  </div>
+  
+  <%= form_for(resource, as: resource_name, url: generate_passwords_path, html: { method: :put }) do |f| %>
+    <% if resource.errors.any? %>
+      <div class="bg-red-50 text-red-800 p-4 rounded-lg mb-5 border border-red-200 text-sm">
+        <ul class="pl-2 space-y-1">
+          <% resource.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
     
-    <div class="text-center mt-8 pt-5 border-t border-gray-200 text-xs text-gray-500">
-      <p>Una vez establecida tu contraseña, podrás acceder al sistema con tu email y contraseña.</p>
+    <%= hidden_field_tag :reset_password_token, params[:reset_password_token] %>
+
+    <div class="mb-5">
+      <%= f.label :password, "Nueva Contraseña", class: "block mb-2 text-sm font-medium text-gray-800" %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password", 
+                         placeholder: "Ingresa tu nueva contraseña", 
+                         class: "w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors duration-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" %>
+      <% if @minimum_password_length %>
+        <div class="rounded-md mt-1 text-xs text-gray-600">
+          <strong>Requisitos:</strong> Mínimo <%= @minimum_password_length %> caracteres. 
+        </div>
+      <% end %>
     </div>
+
+    <div class="mb-5">
+      <%= f.label :password_confirmation, "Confirmar Contraseña", class: "block mb-2 text-sm font-medium text-gray-800" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                         placeholder: "Confirma tu contraseña", 
+                         class: "w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors duration-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" %>
+    </div>
+
+    <div class="text-center mt-8">
+      <%= f.submit "Establecer mi contraseña", class: "w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white px-8 py-3 rounded-lg text-base font-semibold cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+    </div>
+  <% end %>
+  
+  <div class="text-center mt-8 pt-5 border-t border-gray-200 text-xs text-gray-500">
+    <p>Una vez establecida tu contraseña, podrás acceder al sistema con tu email y contraseña.</p>
   </div>
-</body>
-</html>
+</div>
