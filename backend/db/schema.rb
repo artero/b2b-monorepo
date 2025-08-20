@@ -64,6 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_084916) do
     t.string "phone_number"
     t.bigint "customer_id", null: false
     t.boolean "blocked", default: false, null: false
+    t.datetime "generated_password_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_customer_users_on_customer_id"

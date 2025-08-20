@@ -39,6 +39,7 @@ class DeviseCreateCustomerUsers < ActiveRecord::Migration[8.0]
       t.string :phone_number
       t.references :customer, null: false, foreign_key: true
       t.boolean :blocked, default: false, null: false
+      t.datetime :generated_password_at
 
       t.timestamps null: false
     end

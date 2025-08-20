@@ -69,6 +69,7 @@ ActiveAdmin.register CustomerUser do
       end
       row :created_at
       row :updated_at
+      row :generated_password_at
     end
 
     panel "Actions" do

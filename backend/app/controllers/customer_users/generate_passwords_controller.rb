@@ -1,25 +1,68 @@
-class CustomerUsers::GeneratePasswordsController < Devise::PasswordsController
-  # Override the edit action to ensure it uses our custom view
+class CustomerUsers::GeneratePasswordsController < ApplicationController
+  before_action :find_custumer_user_by_token, only: [:edit, :update]
+
   def edit
-    super
+    @minimum_password_length = CustomerUser.password_length.min if CustomerUser.respond_to?(:password_length)
   end
 
-  # Override the update action to customize the password reset process
   def update
-    super
+    if @customer_user.update(password_params)
+      # Clear the reset password token after successful password update
+      @customer_user.update_columns(
+        reset_password_token: nil, 
+        reset_password_sent_at: nil,
+        generated_password_at: Time.current
+      )
+      flash[:notice] = "Contraseña actualizada correctamente."
+
+      redirect_to generate_passwords_path
+    else
+      @minimum_password_length = CustomerUser.password_length.min if CustomerUser.respond_to?(:password_length)
+      render :edit, status: :unprocessable_entity
+    end
   end
 
-  # Override to redirect to custom success page after password reset
-  def after_resetting_password_path_for(resource)
-    # Redirect to a success page or login page
-    new_customer_user_session_path
+  def show
   end
 
-  protected
+  private
 
-  # The path used after sending reset password instructions
-  def after_sending_reset_password_instructions_path_for(resource_name)
-    new_customer_user_session_path
+  def find_custumer_user_by_token
+    token = params[:reset_password_token]
+    
+    unless token.present?
+      flash[:alert] = "Token de restablecimiento de contraseña requerido."
+      redirect_to generate_passwords_path
+      return
+    end
+
+    @customer_user = CustomerUser.find_by(reset_password_token: Devise.token_generator.digest(CustomerUser, :reset_password_token, token))
+    
+    unless @customer_user
+      flash[:alert] = "Token de restablecimiento de contraseña inválido o expirado."
+      redirect_to generate_passwords_path
+      return
+    end
+
+    # Check if token has expired (24 hours)
+    if @customer_user.reset_password_sent_at && @customer_user.reset_password_sent_at < 7.days.ago
+      flash[:alert] = "El enlace de restablecimiento de contraseña ha expirado."
+      redirect_to generate_passwords_path
+      return
+    end
   end
+
+  def password_params
+    params.require(:customer_user).permit(:password, :password_confirmation)
+  end
+
+  def resource
+    @customer_user
+  end
+
+  def resource_name
+    :customer_user
+  end
+  helper_method :resource, :resource_name
 end
 
