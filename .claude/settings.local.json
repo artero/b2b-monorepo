@@ -12,5 +12,9 @@
       "Bash(find:*)"
     ],
     "deny": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "linear-server-javi",
+    "playwright"
+  ]
 }
