@@ -24,7 +24,7 @@ class CustomerUser < ApplicationRecord
   end
 
   def full_name
-    "#{name} #{surname}".strip
+    "#{name} #{surname}".squish
   end
 
   def active?

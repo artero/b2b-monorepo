@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  code: MyString
-  email: MyString
+  name: Foo
+  code: foo_code
+  email: hello@foo.com
 
 two:
-  name: MyString
-  code: MyString
-  email: MyString
+  name: Bar
+  code: bar_code
+  email: hello@bar.com
