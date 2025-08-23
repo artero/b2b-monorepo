@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # Custom password generation routes (outside of Devise)
+  resource :generate_passwords, controller: "customer_users/generate_passwords", only: [ :edit, :update, :show ]
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

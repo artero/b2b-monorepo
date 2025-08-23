@@ -20,9 +20,22 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'system': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
   </head>
 
-  <body>
+  <body class="font-system bg-gradient-to-br from-indigo-500 to-purple-600 min-h-screen flex items-center justify-center p-5">
     <%= yield %>
   </body>
 </html>

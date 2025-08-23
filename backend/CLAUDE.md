@@ -55,6 +55,8 @@ bundle update           # Update gems
 - **Standard Rails 8 setup** with Solid adapters replacing Redis
 - **Health check endpoint** at `/health` with database connectivity verification
 - **PostgreSQL integration** for all persistence needs
+- **Customer User Authentication** with Devise and secure password generation workflow
+- **ActiveAdmin panel** for backend administration
 
 ### Key Architectural Decisions
 1. **MISE over rbenv**: Project uses MISE for Ruby version management
@@ -80,6 +82,14 @@ bundle update           # Update gems
 - Models use PostgreSQL via ActiveRecord
 - Routes defined in `config/routes.rb`
 - Database changes via `rails generate migration`
+
+### Customer User Password Generation
+- **Controller**: `CustomerUsers::GeneratePasswordsController`
+- **Routes**: Namespaced under `/customer_users/generate_passwords`
+- **Token-based security**: Uses Devise's reset password token mechanism
+- **Database tracking**: Includes `generated_password_at` timestamp
+- **Token expiration**: 7 days from `reset_password_sent_at`
+- **Flash messaging**: Success/error feedback with redirect patterns
 
 ### Common Issues
 - **Ruby version errors**: Ensure MISE is activated and configured
