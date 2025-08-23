@@ -44,8 +44,8 @@ class CustomerUsers::GeneratePasswordsController < ApplicationController
       return
     end
 
-    # Check if token has expired (24 hours)
-    if @customer_user.reset_password_sent_at && @customer_user.reset_password_sent_at < 7.days.ago
+    # Check if token has expired (using Devise configuration)
+    if @customer_user.reset_password_sent_at && @customer_user.reset_password_sent_at < Devise.reset_password_within.ago
       flash[:alert] = "El enlace de restablecimiento de contraseña ha expirado."
       redirect_to generate_passwords_path
       nil
