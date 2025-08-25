@@ -1,10 +1,14 @@
 class CustomerUser < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :validatable
+  # Include DeviseTokenAuth concerns first
+  include DeviseTokenAuth::Concerns::User
+  
+  # Devise modules - DeviseTokenAuth overrides database_authenticatable
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable
 
   belongs_to :customer
+  
+  # Ensure uid is set to email before validation for DeviseTokenAuth
+  before_validation :set_uid
 
   validates :name, presence: true
   validates :surname, presence: true
@@ -29,6 +33,16 @@ class CustomerUser < ApplicationRecord
 
   def active?
     !blocked
+  end
+
+  # Override Devise method to prevent blocked users from authenticating
+  def active_for_authentication?
+    super && !blocked
+  end
+
+  # Optional: Provide custom error message for blocked users
+  def inactive_message
+    blocked? ? :blocked : super
   end
 
   def send_password_generation_instructions
@@ -60,5 +74,21 @@ class CustomerUser < ApplicationRecord
     else
       user
     end
+  end
+
+  # DeviseTokenAuth method stubs for missing confirmable fields
+  def confirmed_at
+    created_at # Always consider users as confirmed
+  end
+  
+  def confirmed_at=(value)
+    # No-op, we don't use email confirmation
+  end
+  
+  private
+  
+  def set_uid
+    self.uid = email if uid.blank? && email.present?
+    self.provider = 'email' if provider.blank?
   end
 end
