@@ -2,6 +2,7 @@ require "test_helper"
 
 class AdminInterfaceTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
+  include Capybara::Minitest::Assertions
 
   teardown do
     Capybara.reset_sessions!
@@ -10,7 +11,6 @@ class AdminInterfaceTest < ActionDispatch::IntegrationTest
 
   test "admin can access dashboard after login" do
     visit new_admin_user_session_path
-
 
     fill_in "Email", with: admin_users(:one).email
     fill_in "Contraseña", with: "password123"

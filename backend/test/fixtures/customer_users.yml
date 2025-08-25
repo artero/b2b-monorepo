@@ -8,6 +8,8 @@ one:
   customer: one
   blocked: false
   generated_password_at: <%= 2.days.ago %>
+  provider: email
+  uid: john.doe@example.com
 
 two:
   name: Jane
@@ -15,7 +17,9 @@ two:
   email: jane.smith@example.com
   phone_number: "+0987654321"
   customer: two
-  blocked: false
+  blocked: true
+  provider: email
+  uid: jane.smith@example.com
 
 with_empty_name:
   name: ""
@@ -25,6 +29,8 @@ with_empty_name:
   customer: one
   blocked: false
   generated_password_at: <%= 1.week.ago %>
+  provider: email
+  uid: empty.name@example.com
 
 with_empty_surname:
   name: Bob
@@ -32,6 +38,8 @@ with_empty_surname:
   email: empty.surname@example.com
   customer: one
   blocked: false
+  provider: email
+  uid: empty.surname@example.com
 
 with_whitespace:
   name: " Alice "
@@ -40,6 +48,8 @@ with_whitespace:
   phone_number: "+2222222222"
   customer: two
   blocked: false
+  provider: email
+  uid: whitespace@example.com
 
 recently_generated_password:
   name: Charlie
@@ -49,3 +59,5 @@ recently_generated_password:
   customer: one
   blocked: false
   generated_password_at: <%= 1.hour.ago %>
+  provider: email
+  uid: charlie.wilson@example.com

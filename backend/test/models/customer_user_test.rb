@@ -39,12 +39,12 @@ class CustomerUserTest < ActiveSupport::TestCase
 
   test "send_password_generation_instructions generates token and sets timestamp" do
     user = customer_users(:two)
-    
+
     assert_nil user.reset_password_token
     assert_nil user.reset_password_sent_at
-    
+
     result = user.send_password_generation_instructions
-    
+
     assert result
     assert_not_nil user.reset_password_token
     assert_not_nil user.reset_password_sent_at
@@ -55,8 +55,8 @@ class CustomerUserTest < ActiveSupport::TestCase
 
   test "send_password_generation_instructions sends email" do
     user = customer_users(:two)
-    
-    assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+
+    assert_difference "ActionMailer::Base.deliveries.size", 1 do
       user.send_password_generation_instructions
     end
   end
@@ -64,29 +64,29 @@ class CustomerUserTest < ActiveSupport::TestCase
   test "send_password_generation_instructions returns false on validation error" do
     user = customer_users(:two)
     user.email = nil
-    
+
     result = user.send_password_generation_instructions
-    
+
     assert_not result
   end
 
   test "send_password_generation_instructions clears generated_password_at" do
     user = customer_users(:one)
     assert_not_nil user.generated_password_at
-    
+
     user.send_password_generation_instructions
     user.reload
-    
+
     assert_nil user.generated_password_at
   end
 
   test "token is valid within 24 hours" do
     user = customer_users(:two)
     user.send_password_generation_instructions
-    
+
     # Simulate token generated 23 hours ago
     user.update_column(:reset_password_sent_at, 23.hours.ago)
-    
+
     # Token should still be valid
     assert user.reset_password_sent_at >= Devise.reset_password_within.ago
   end
@@ -94,10 +94,10 @@ class CustomerUserTest < ActiveSupport::TestCase
   test "token expires after 24 hours" do
     user = customer_users(:two)
     user.send_password_generation_instructions
-    
+
     # Simulate token generated 25 hours ago
     user.update_column(:reset_password_sent_at, 25.hours.ago)
-    
+
     # Token should be expired
     assert user.reset_password_sent_at < Devise.reset_password_within.ago
   end

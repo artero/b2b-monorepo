@@ -122,6 +122,42 @@ Repositorio: https://github.com/artero/b2b-monorepo
 - **Backend Rails app**: See `backend/CLAUDE.md` for Rails-specific guidance
 - **Future applications**: Will have their own CLAUDE.md files in respective directories
 
+## Authentication System
+
+### Devise Token Auth Implementation
+- **API Authentication**: Implemented with `devise_token_auth` gem for secure stateless authentication
+- **Customer User Model**: Integrated with existing CustomerUser model with blocked user support
+- **Token-based Security**: Uses rotating tokens that refresh on each request for enhanced security
+- **Token Lifespan**: Configurable token expiration (default: 2 weeks)
+
+### API Endpoints
+```bash
+# Authentication endpoints
+POST   /auth/sign_in          # Login - returns tokens in headers
+DELETE /auth/sign_out         # Logout - invalidates tokens  
+GET    /auth/validate_token   # Validate current tokens
+POST   /auth/password         # Password reset functionality
+```
+
+### Authentication Flow for Frontend Applications
+1. **Login**: POST credentials to `/auth/sign_in`
+2. **Token Storage**: Extract `access-token`, `client`, and `uid` from response headers
+3. **Request Authentication**: Include all 3 headers in subsequent API requests
+4. **Token Refresh**: Update stored tokens from response headers after each successful request
+5. **User Access**: Rails automatically provides `@current_customer_user` in protected controllers
+
+### Controller Architecture
+- **ApiController**: Base controller for API endpoints with DeviseTokenAuth integration
+- **Auth::SessionsController**: Handles login/logout with CSRF protection disabled
+- **Auth::TokenValidationsController**: Manages token validation
+- **Protected Resources**: Inherit from `ApiController` and use `before_action :authenticate_customer_user!`
+
+### Security Features
+- **Blocked User Protection**: Users with `blocked: true` cannot authenticate
+- **Token Rotation**: Tokens regenerate on each request preventing replay attacks
+- **CSRF Protection**: Disabled for API endpoints, enabled for web interface
+- **Separate Concerns**: Authentication logic isolated from main ApplicationController
+
 ## Development Workflow
 
 ### Repository-Level Operations
@@ -129,3 +165,18 @@ Repositorio: https://github.com/artero/b2b-monorepo
 2. Navigate to specific application directory for development
 3. Use GitHub CLI for repository-level operations (PRs, issues, etc.)
 4. Use Linear tools for task management across the entire project
+
+### API Testing
+```bash
+# Test login endpoint
+curl -X POST http://localhost:3000/auth/sign_in \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "password123"}' \
+  -v
+
+# Test protected endpoint with tokens
+curl -X GET http://localhost:3000/api/v1/protected-resource \
+  -H "access-token: YOUR_ACCESS_TOKEN" \
+  -H "client: YOUR_CLIENT_TOKEN" \
+  -H "uid: YOUR_USER_EMAIL"
+```

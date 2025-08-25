@@ -19,7 +19,11 @@ gem "jbuilder"
 
 # Authentication and Admin Interface
 gem "devise"
+gem "devise_token_auth"
 gem "activeadmin", "4.0.0.beta16"
+
+# CORS for API requests
+gem "rack-cors"
 
 # CSS bundling and TailwindCSS for ActiveAdmin 4.0
 gem "cssbundling-rails"

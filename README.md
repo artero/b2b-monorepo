@@ -142,6 +142,221 @@ b2b-monorepo/
 }
 ```
 
+### Authentication API
+- **URL**: `POST /auth/sign_in`
+- **Description**: Customer user login with token-based authentication
+- **Request body**:
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+- **Successful response** (200) - **Tokens returned in headers**:
+```json
+{
+  "data": {
+    "email": "user@example.com",
+    "provider": "email",
+    "uid": "user@example.com",
+    "customer_id": 123,
+    "id": 456,
+    "name": "John",
+    "surname": "Doe"
+  }
+}
+```
+- **Response Headers** (Important for authentication):
+```
+access-token: AbCdEf123XyZ...
+client: 12345-67890-abcdef...
+uid: user@example.com
+```
+
+- **URL**: `DELETE /auth/sign_out`
+- **Description**: Logout and invalidate tokens
+- **Headers required**:
+```
+access-token: YOUR_ACCESS_TOKEN
+client: YOUR_CLIENT_TOKEN
+uid: YOUR_USER_EMAIL
+```
+
+- **URL**: `GET /auth/validate_token`
+- **Description**: Validate current authentication tokens
+- **Headers required**: Same as sign_out
+
+## 🔐 Authentication System (Devise Token Auth)
+
+### Overview
+This application uses **Devise Token Auth** for secure, stateless API authentication. The system is designed for frontend applications (React, Angular, etc.) that need to authenticate users and make subsequent API requests.
+
+### Key Security Features
+
+#### 🔄 **Token Rotation (High Security)**
+- **Tokens refresh on EVERY successful request** - not just login
+- This prevents token replay attacks and limits exposure time
+- Frontend must update stored tokens after each API call
+
+#### ⏰ **Short Token Lifespan**
+- Default token expiration: **2 weeks** (configurable)
+- Tokens become invalid after the configured time period
+- Automatic cleanup of expired tokens from database
+
+#### 🛡️ **Multi-Token Authentication**
+Requires **3 separate tokens** for each request:
+- `access-token`: Main authentication token (rotates on each request)
+- `client`: Client identifier (rotates with access-token)  
+- `uid`: User identifier (user's email address)
+
+#### 🚫 **Blocked User Protection**
+- Users with `blocked: true` cannot authenticate
+- Automatic rejection at the authentication layer
+- No additional checks needed in protected controllers
+
+### Authentication Flow
+
+#### 1. **Initial Login**
+```bash
+curl -X POST http://localhost:3000/auth/sign_in \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "password123"}'
+```
+
+**Response includes tokens in headers:**
+```
+access-token: AbCdEf123XyZ...
+client: 12345-67890-abcdef...
+uid: user@example.com
+```
+
+#### 2. **Subsequent Requests** 
+```bash
+curl -X GET http://localhost:3000/api/v1/protected-resource \
+  -H "access-token: AbCdEf123XyZ..." \
+  -H "client: 12345-67890-abcdef..." \
+  -H "uid: user@example.com"
+```
+
+**⚠️ Important**: Response headers contain **new tokens** that must be stored!
+
+#### 3. **Frontend Token Management**
+```javascript
+// Save tokens after login
+const saveTokens = (response) => {
+  localStorage.setItem('access-token', response.headers.get('access-token'));
+  localStorage.setItem('client', response.headers.get('client'));
+  localStorage.setItem('uid', response.headers.get('uid'));
+};
+
+// Include tokens in every API request
+const authenticatedFetch = async (url, options = {}) => {
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      'access-token': localStorage.getItem('access-token'),
+      'client': localStorage.getItem('client'),
+      'uid': localStorage.getItem('uid'),
+      ...options.headers
+    }
+  });
+  
+  // CRITICAL: Update tokens after each successful request
+  if (response.ok) {
+    saveTokens(response);
+  }
+  
+  return response;
+};
+```
+
+### Why This Security Model?
+
+#### **Traditional vs Token Auth Comparison**
+
+| Feature | Session-based | JWT | Devise Token Auth |
+|---------|---------------|-----|-------------------|
+| State | Stateful | Stateless | Stateless |
+| Security | Server-side sessions | Long-lived tokens | Rotating tokens |
+| Scalability | Limited | Excellent | Excellent |
+| Mobile/SPA | Poor | Good | Excellent |
+| Token Refresh | N/A | Manual | Automatic |
+| Replay Attack Protection | Session timeout | Token expiration | Token rotation |
+
+#### **Security Advantages:**
+1. **Token Rotation**: Each request generates new tokens, limiting the window for attacks
+2. **Multi-token System**: Requires multiple pieces of information to authenticate  
+3. **Database Validation**: Tokens are validated against the database on each request
+4. **Automatic Cleanup**: Expired tokens are automatically removed
+5. **Blocked User Support**: Built-in support for disabling user access
+
+### Testing Authentication
+
+#### **Create Test User**
+```bash
+# Rails console
+rails console
+
+customer = Customer.create!(
+  name: "Test Customer",
+  code: "test_001", 
+  email: "customer@test.com"
+)
+
+user = CustomerUser.create!(
+  name: "Test",
+  surname: "User", 
+  email: "test@example.com",
+  password: "password123",
+  password_confirmation: "password123",
+  customer: customer,
+  blocked: false,
+  provider: "email",
+  uid: "test@example.com"
+)
+```
+
+#### **Test with cURL**
+```bash
+# 1. Login and save tokens
+curl -X POST http://localhost:3000/auth/sign_in \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "password": "password123"}' \
+  -v
+
+# 2. Copy tokens from response headers and test validation
+curl -X GET http://localhost:3000/auth/validate_token \
+  -H "access-token: YOUR_ACCESS_TOKEN" \
+  -H "client: YOUR_CLIENT_TOKEN" \
+  -H "uid: test@example.com" \
+  -v
+```
+
+### Error Responses
+
+#### **Authentication Failures (401)**
+```json
+{
+  "success": false,
+  "errors": ["Invalid login credentials. Please try again."]
+}
+```
+
+#### **Blocked User (401)**
+```json
+{
+  "success": false, 
+  "errors": ["Your account is not activated."]
+}
+```
+
+#### **Invalid/Expired Tokens (401)**
+```json
+{
+  "errors": ["Invalid token."]
+}
+```
+
 ## 🛠 Troubleshooting
 
 ### Issue: "Ruby version not found"
@@ -220,6 +435,52 @@ mise settings add idiomatic_version_file_enable_tools ruby
 1. Make sure Docker Desktop is running
 2. Restart Docker Desktop if necessary
 
+### Issue: "Authentication tokens not working"
+```bash
+# Error: 401 Unauthorized on API requests
+```
+**Solutions:**
+1. **Verify token headers are included** in every request:
+   ```bash
+   curl -X GET http://localhost:3000/auth/validate_token \
+     -H "access-token: YOUR_TOKEN" \
+     -H "client: YOUR_CLIENT" \
+     -H "uid: YOUR_EMAIL" \
+     -v
+   ```
+
+2. **Check token expiration** (tokens expire after 2 weeks by default):
+   ```bash
+   # Login again to get fresh tokens
+   curl -X POST http://localhost:3000/auth/sign_in \
+     -H "Content-Type: application/json" \
+     -d '{"email": "user@example.com", "password": "password123"}'
+   ```
+
+3. **Verify user is not blocked**:
+   ```bash
+   # Rails console
+   rails console
+   user = CustomerUser.find_by(email: "user@example.com")
+   puts user.blocked?  # Should return false
+   ```
+
+### Issue: "Tokens keep becoming invalid"
+**Cause**: Frontend not updating tokens after each request
+**Solution**: Always update stored tokens from response headers:
+```javascript
+// After each successful API request
+if (response.ok) {
+  const newToken = response.headers.get('access-token');
+  const newClient = response.headers.get('client');
+  
+  if (newToken && newClient) {
+    localStorage.setItem('access-token', newToken);
+    localStorage.setItem('client', newClient);
+  }
+}
+```
+
 ### Quick system verification
 ```bash
 # Check all dependencies
@@ -232,6 +493,12 @@ docker-compose --version
 # Service status
 docker-compose ps
 curl -s http://localhost:3000/health | jq '.status'
+
+# Test authentication
+curl -X POST http://localhost:3000/auth/sign_in \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "password": "password123"}' \
+  -v
 ```
 
 ## 📧 Email Development
@@ -258,5 +525,13 @@ In development, emails are automatically opened in your browser using the `lette
 - **Logs**: Located in `backend/log/development.log`
 - **Cache**: Cleared automatically, but you can force with `rails tmp:clear`
 - **Emails**: Development emails open in browser via `letter_opener` gem
+- **Authentication**: Uses Devise Token Auth with rotating tokens for maximum security
+- **API Endpoints**: All authentication endpoints are under `/auth/*`
+- **Token Storage**: Frontend must store and update `access-token`, `client`, and `uid` headers
+- **Security**: Tokens refresh on every successful request (NOT just login)
 
-For more information about Rails 8, check the [official documentation](https://guides.rubyonrails.org/).
+### Related Documentation
+- **Rails 8**: [Official Rails Guides](https://guides.rubyonrails.org/)
+- **Devise**: [Authentication Documentation](https://github.com/heartcombo/devise)  
+- **Devise Token Auth**: [API Authentication Guide](https://github.com/lynndylanhurley/devise_token_auth)
+- **PostgreSQL**: [Official PostgreSQL Documentation](https://www.postgresql.org/docs/)
