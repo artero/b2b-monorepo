@@ -1,12 +1,12 @@
 class CustomerUser < ApplicationRecord
   # Include DeviseTokenAuth concerns first
   include DeviseTokenAuth::Concerns::User
-  
+
   # Devise modules - DeviseTokenAuth overrides database_authenticatable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable
 
   belongs_to :customer
-  
+
   # Ensure uid is set to email before validation for DeviseTokenAuth
   before_validation :set_uid
 
@@ -80,15 +80,15 @@ class CustomerUser < ApplicationRecord
   def confirmed_at
     created_at # Always consider users as confirmed
   end
-  
+
   def confirmed_at=(value)
     # No-op, we don't use email confirmation
   end
-  
+
   private
-  
+
   def set_uid
     self.uid = email if uid.blank? && email.present?
-    self.provider = 'email' if provider.blank?
+    self.provider = "email" if provider.blank?
   end
 end
