@@ -2,34 +2,16 @@ require 'test_helper'
 
 class AuthTest < ActionDispatch::IntegrationTest
   def setup
-    @customer = Customer.create!(
-      name: "Test Customer",
-      code: "test_customer_code",
-      email: "customer@example.com"
+    @active_user = customer_users(:one)
+    @active_user.update!(
+      password: "password123",
+      password_confirmation: "password123"
     )
     
-    @active_user = CustomerUser.create!(
-      name: "Active",
-      surname: "User",
-      email: "active@example.com",
+    @blocked_user = customer_users(:two)
+    @blocked_user.update!(
       password: "password123",
-      password_confirmation: "password123",
-      customer: @customer,
-      blocked: false,
-      provider: "email",
-      uid: "active@example.com"
-    )
-    
-    @blocked_user = CustomerUser.create!(
-      name: "Blocked",
-      surname: "User", 
-      email: "blocked@example.com",
-      password: "password123",
-      password_confirmation: "password123",
-      customer: @customer,
-      blocked: true,
-      provider: "email",
-      uid: "blocked@example.com"
+      password_confirmation: "password123"
     )
   end
 
