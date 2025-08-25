@@ -1,0 +1,102 @@
+[
+  {
+    "code": "PP-R1010-400",
+    "name": "Pintura Acrílica Roja Brillante",
+    "brand": "PintyPlus",
+    "size": "400ml",
+    "color": "Rojo",
+    "family": "Basic",
+    "units_per_box": 12,
+    "price": 8.50
+  },
+  {
+    "code": "PP-B2020-400",
+    "name": "Pintura Acrílica Azul Mate",
+    "brand": "PintyPlus",
+    "size": "400ml",
+    "color": "Azul",
+    "family": "Evolution",
+    "units_per_box": 12,
+    "price": 9.75
+  },
+  {
+    "code": "PP-V3030-200",
+    "name": "Pintura Acrílica Verde Satinada",
+    "brand": "PintyPlus",
+    "size": "200ml",
+    "color": "Verde",
+    "family": "Tech",
+    "units_per_box": 24,
+    "price": 6.25
+  },
+  {
+    "code": "PP-N4040-400",
+    "name": "Pintura Acrílica Negro Brillante",
+    "brand": "PintyPlus",
+    "size": "400ml",
+    "color": "Negro",
+    "family": "Basic",
+    "units_per_box": 12,
+    "price": 8.50
+  },
+  {
+    "code": "PP-B5050-600",
+    "name": "Pintura Acrílica Blanco Mate",
+    "brand": "PintyPlus",
+    "size": "600ml",
+    "color": "Blanco",
+    "family": "Evolution",
+    "units_per_box": 6,
+    "price": 12.90
+  },
+  {
+    "code": "PP-A6060-400",
+    "name": "Pintura Acrílica Amarillo Brillante",
+    "brand": "PintyPlus",
+    "size": "400ml",
+    "color": "Amarillo",
+    "family": "Tech",
+    "units_per_box": 12,
+    "price": 9.25
+  },
+  {
+    "code": "PP-G7070-200",
+    "name": "Pintura Acrílica Gris Satinado",
+    "brand": "PintyPlus",
+    "size": "200ml",
+    "color": "Gris",
+    "family": "Basic",
+    "units_per_box": 24,
+    "price": 5.95
+  },
+  {
+    "code": "PP-M8080-400",
+    "name": "Pintura Acrílica Marrón Mate",
+    "brand": "PintyPlus",
+    "size": "400ml",
+    "color": "Marrón",
+    "family": "Evolution",
+    "units_per_box": 12,
+    "price": 8.75
+  },
+  {
+    "code": "PP-O9090-600",
+    "name": "Pintura Acrílica Naranja Brillante",
+    "brand": "PintyPlus",
+    "size": "600ml",
+    "color": "Naranja",
+    "family": "Tech",
+    "units_per_box": 6,
+    "price": 13.45
+  },
+  {
+    "code": "PP-P1000-400",
+    "name": "Pintura Acrílica Púrpura Satinada",
+    "brand": "PintyPlus",
+    "size": "400ml",
+    "color": "Púrpura",
+    "family": "Evolution",
+    "units_per_box": 12,
+    "price": 10.20
+  }
+]
