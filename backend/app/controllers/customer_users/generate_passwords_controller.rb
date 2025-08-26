@@ -1,5 +1,5 @@
 class CustomerUsers::GeneratePasswordsController < ApplicationController
-  before_action :find_custumer_user_by_token, only: [ :edit, :update ]
+  before_action :find_customer_user_by_token, only: [ :edit, :update ]
 
   def edit
     @minimum_password_length = CustomerUser.password_length.min if CustomerUser.respond_to?(:password_length)
@@ -27,7 +27,7 @@ class CustomerUsers::GeneratePasswordsController < ApplicationController
 
   private
 
-  def find_custumer_user_by_token
+  def find_customer_user_by_token
     token = params[:reset_password_token]
 
     unless token.present?
