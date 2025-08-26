@@ -105,6 +105,8 @@ b2b-monorepo/
 ├── README.md                 # This file
 ├── docker-compose.yml        # Services (PostgreSQL)
 ├── .gitignore               # Git ignored files
+├── features/                # Feature documentation
+│   └── create_customer_user_feature.md  # Create Customer User feature specs
 └── backend/                 # Rails application
     ├── app/
     │   └── controllers/
@@ -115,6 +117,25 @@ b2b-monorepo/
     ├── Gemfile              # Ruby dependencies
     └── ...                  # Other Rails files
 ```
+
+## 📋 Features Documentation
+
+This project includes comprehensive feature documentation for QA testing and development reference. Each feature document contains:
+
+- **Feature description and objectives**
+- **User roles and responsibilities**
+- **Technical implementation details**
+- **Step-by-step acceptance tests**
+- **API testing commands**
+- **Success criteria**
+
+### Available Features
+
+1. **[Create Customer User Feature](features/create_customer_user_feature.md)**
+   - Admin can send password instructions to customer users
+   - Customer users can set passwords via email links
+   - Full API authentication flow validation
+   - Integration with ActiveAdmin and Letter Opener
 
 ## 🔍 Available Endpoints
 

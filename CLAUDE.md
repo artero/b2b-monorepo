@@ -11,6 +11,7 @@ This is a B2B monorepo with a Ruby on Rails backend. The project structure allow
 b2b-monorepo/
 ├── docker-compose.yml   # Infrastructure dependencies: PostgreSQL service
 ├── backend/             # Rails 8 application (see backend/CLAUDE.md)
+├── features/            # Feature documentation for QA and development
 ├── .github/             # CI/CD workflows
 └── README.md           # Setup instructions
 ```
@@ -158,6 +159,32 @@ POST   /auth/password         # Password reset functionality
 - **CSRF Protection**: Disabled for API endpoints, enabled for web interface
 - **Separate Concerns**: Authentication logic isolated from main ApplicationController
 
+## Feature Documentation
+
+### Overview
+The project includes comprehensive feature documentation in the `features/` directory. These documents serve as:
+- **QA Testing Guides**: Step-by-step acceptance tests for manual and automated testing
+- **Development Reference**: Feature specifications and technical requirements
+- **API Documentation**: Complete curl command examples for testing endpoints
+
+### Feature Document Structure
+Each feature document contains:
+- **Feature Description**: Clear explanation of functionality and objectives
+- **User Roles**: Definition of involved user types and their responsibilities
+- **Technical Flow**: Backend components and architectural details
+- **Acceptance Tests**: Detailed step-by-step testing scenarios
+- **API Commands**: Complete curl examples for testing all endpoints
+- **Success Criteria**: Functional, non-functional, and security requirements
+
+### Available Features
+- **[Create Customer User Feature](features/create_customer_user_feature.md)**: Admin password instruction sending and customer user activation flow
+
+### Using Feature Documents
+1. **For QA Testing**: Follow acceptance test scenarios step-by-step
+2. **For Development**: Reference technical specifications and API examples
+3. **For Integration**: Use curl commands to test API functionality
+4. **For Documentation**: Maintain up-to-date feature specifications
+
 ## Development Workflow
 
 ### Repository-Level Operations
@@ -165,6 +192,7 @@ POST   /auth/password         # Password reset functionality
 2. Navigate to specific application directory for development
 3. Use GitHub CLI for repository-level operations (PRs, issues, etc.)
 4. Use Linear tools for task management across the entire project
+5. Reference feature documentation for testing and validation
 
 ### API Testing
 ```bash
