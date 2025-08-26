@@ -14,7 +14,6 @@ class CustomerUser < ApplicationRecord
   validates :surname, presence: true
   validates :email, presence: true, uniqueness: true
   validates :customer_id, presence: true
-  validates :blocked, inclusion: { in: [ true, false ] }
 
   scope :active, -> { where(blocked: false) }
   scope :blocked, -> { where(blocked: true) }
