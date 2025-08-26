@@ -1,0 +1,95 @@
+{
+  "rows": [
+    {
+      "observations": "Cliente prioritario - entrega en horario matutino",
+      "delivery_preference": "2024-12-15",
+      "order_date": "2024-12-01",
+      "rows": [
+        {
+          "code": "PROD001",
+          "units": 10
+        },
+        {
+          "code": "PROD005",
+          "units": 25
+        },
+        {
+          "code": "PROD012",
+          "units": 5
+        }
+      ]
+    },
+    {
+      "observations": "Dirección de entrega verificada - contactar previamente",
+      "delivery_preference": "2024-12-18",
+      "order_date": "2024-12-02",
+      "rows": [
+        {
+          "code": "PROD003",
+          "units": 15
+        },
+        {
+          "code": "PROD007",
+          "units": 8
+        }
+      ]
+    },
+    {
+      "observations": "Pedido urgente - confirmar disponibilidad",
+      "delivery_preference": "2024-12-12",
+      "order_date": "2024-12-05",
+      "rows": [
+        {
+          "code": "PROD002",
+          "units": 50
+        },
+        {
+          "code": "PROD009",
+          "units": 12
+        },
+        {
+          "code": "PROD015",
+          "units": 3
+        },
+        {
+          "code": "PROD020",
+          "units": 7
+        }
+      ]
+    },
+    {
+      "observations": "Cliente habitual - misma dirección de siempre",
+      "delivery_preference": "2024-12-20",
+      "order_date": "2024-12-03",
+      "rows": [
+        {
+          "code": "PROD011",
+          "units": 30
+        },
+        {
+          "code": "PROD018",
+          "units": 18
+        }
+      ]
+    },
+    {
+      "observations": "Verificar stock antes de confirmar",
+      "delivery_preference": "2024-12-22",
+      "order_date": "2024-12-06",
+      "rows": [
+        {
+          "code": "PROD006",
+          "units": 22
+        },
+        {
+          "code": "PROD013",
+          "units": 9
+        },
+        {
+          "code": "PROD017",
+          "units": 14
+        }
+      ]
+    }
+  ]
+}

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     get "articles", to: "articles#index"
+    resources "orders", only: [ :index, :create ]
   end
 
   # Defines the root path route ("/")
