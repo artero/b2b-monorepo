@@ -1,0 +1,133 @@
+openapi: 3.0.1
+info:
+  title: B2B Customer API
+  version: v1
+  description: B2B Customer Authentication and Management API
+servers:
+- url: http://localhost:3000
+  description: Development server
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.company.com
+  description: Production server
+paths:
+  /auth/sign_in:
+    post:
+      summary: Sign in
+      description: Sign in with email and password to get authentication tokens
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Customer user email
+                  example: user@example.com
+                password:
+                  type: string
+                  description: User password
+                  example: password123
+              required:
+              - email
+              - password
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      provider:
+                        type: string
+                      uid:
+                        type: string
+                    required:
+                    - id
+                    - email
+                    - name
+                    - surname
+                    - provider
+                    - uid
+                required:
+                - data
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - Invalid login credentials. Please try again.
+                required:
+                - success
+                - errors
+  /health:
+    get:
+      summary: Health check
+      description: Check system health status
+      tags:
+      - System
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    example: '2023-01-01T00:00:00Z'
+                  services:
+                    type: object
+                    properties:
+                      database:
+                        type: string
+                        example: ok
+                required:
+                - status
+components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: access-token
+      description: DeviseTokenAuth access token
+    ClientAuth:
+      type: apiKey
+      in: header
+      name: client
+      description: DeviseTokenAuth client token
+    UidAuth:
+      type: apiKey
+      in: header
+      name: uid
+      description: User email (uid)

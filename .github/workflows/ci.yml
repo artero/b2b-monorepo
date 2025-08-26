@@ -74,9 +74,9 @@ jobs:
     - name: Run tests
       run: |
         cd backend
-        bundle exec rails test
+        bundle exec rspec --exclude-pattern="spec/system/*"
     
     - name: Run system tests
       run: |
         cd backend
-        bundle exec rails test:system
+        bundle exec rspec spec/system/

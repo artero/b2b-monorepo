@@ -63,6 +63,10 @@ group :development, :test do
 
   # To preview emails in the browser [https://github.com/fgrehm/letter_opener_web?tab=readme-ov-file]
   gem "letter_opener_web", "~> 3.0"
+
+  # RSpec testing framework
+  gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 group :development do
@@ -74,4 +78,9 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # RSwag for API documentation
+  gem "rswag-specs"
+  gem "rswag-api"
+  gem "rswag-ui"
 end

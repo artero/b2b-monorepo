@@ -39,7 +39,10 @@ rails tmp:clear          # Clear Rails cache
 
 ### Testing and Quality
 ```bash
-rails test              # Run tests
+bundle exec rspec       # Run all tests
+bundle exec rspec spec/models/        # Run model tests
+bundle exec rspec spec/requests/      # Run request tests  
+bundle exec rspec spec/system/        # Run system tests
 rubocop                 # Run linter
 brakeman                # Security analysis
 ```
@@ -99,12 +102,36 @@ bundle update           # Update gems
 
 ## Testing Strategy
 
-The project includes test setup with:
-- **Rails testing framework** (standard)
-- **Capybara + Selenium** for system tests
+The project uses **RSpec** as the primary testing framework:
+- **RSpec Rails** for comprehensive testing (models, controllers, requests, system)
+- **FactoryBot** for test data generation (replacing fixtures)
+- **Capybara + Selenium** for system tests with headless Chrome
+- **RSwag** for API documentation generation from tests
 - **Debug gem** for development debugging
 - **Brakeman** for security analysis
 - **RuboCop** for code style (Rails Omakase config)
+
+### Test Structure
+```
+spec/
+├── controllers/     # Controller specs
+├── factories/       # FactoryBot factories
+├── integration/     # RSwag API documentation specs
+├── lib/            # Library specs
+├── mailers/        # Mailer specs
+├── models/         # Model specs
+├── requests/       # Request specs (API testing)
+├── system/         # System specs (Capybara)
+├── rails_helper.rb # RSpec Rails configuration
+├── spec_helper.rb  # RSpec base configuration
+└── swagger_helper.rb # RSwag configuration
+```
+
+### RSwag API Documentation
+- Configure with `spec/swagger_helper.rb`
+- Create API specs in `spec/integration/` 
+- View documentation at `/api-docs` when server running
+- Supports OpenAPI 3.0 specification
 
 ## Deployment Considerations
 

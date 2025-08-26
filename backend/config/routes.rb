@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
   # DeviseTokenAuth routes for CustomerUser API authentication with custom controllers
   mount_devise_token_auth_for "CustomerUser", at: "auth", controllers: {
     sessions: "auth/sessions",
