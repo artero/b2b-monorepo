@@ -101,4 +101,59 @@ class CustomerUserTest < ActiveSupport::TestCase
     # Token should be expired
     assert user.reset_password_sent_at < Devise.reset_password_within.ago
   end
+
+  test "blocked field defaults to false for new user" do
+    user = CustomerUser.new(
+      name: "Test",
+      surname: "User",
+      email: "test@example.com",
+      customer: customers(:one),
+      password: "password123",
+      password_confirmation: "password123"
+    )
+    assert user.valid?
+    assert_not user.blocked
+  end
+
+  test "active scope returns non-blocked users" do
+    active_users = CustomerUser.active
+    active_users.each do |user|
+      assert_not user.blocked, "User #{user.email} should not be blocked in active scope"
+    end
+  end
+
+  test "blocked scope returns blocked users" do
+    blocked_users = CustomerUser.blocked
+    blocked_users.each do |user|
+      assert user.blocked, "User #{user.email} should be blocked in blocked scope"
+    end
+  end
+
+  test "active? method returns opposite of blocked" do
+    user = customer_users(:one)
+
+    user.blocked = false
+    assert user.active?
+
+    user.blocked = true
+    assert_not user.active?
+  end
+
+  test "active_for_authentication? returns false for blocked users" do
+    user = customer_users(:one)
+    user.blocked = true
+    assert_not user.active_for_authentication?
+  end
+
+  test "active_for_authentication? returns true for non-blocked users" do
+    user = customer_users(:one)
+    user.blocked = false
+    assert user.active_for_authentication?
+  end
+
+  test "inactive_message returns :blocked for blocked users" do
+    user = customer_users(:one)
+    user.blocked = true
+    assert_equal :blocked, user.inactive_message
+  end
 end
