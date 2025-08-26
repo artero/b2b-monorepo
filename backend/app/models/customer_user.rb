@@ -3,7 +3,7 @@ class CustomerUser < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   # Devise modules - DeviseTokenAuth overrides database_authenticatable
-  devise :database_authenticatable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable
 
   belongs_to :customer
 

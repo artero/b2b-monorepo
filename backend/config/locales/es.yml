@@ -1,5 +1,12 @@
 es:
   hello: "B2B webshop Admin"
+  customer_users:
+    generate_passwords:
+      success: "Contraseña actualizada correctamente."
+      error: "Error al actualizar la contraseña."
+      token_required: "Token de restablecimiento de contraseña requerido."
+      invalid_token: "Token de restablecimiento de contraseña inválido o expirado."
+      expired_token: "El enlace de restablecimiento de contraseña ha expirado."
   activerecord:
     errors:
       messages:
