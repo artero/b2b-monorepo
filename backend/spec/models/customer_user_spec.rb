@@ -8,7 +8,8 @@ RSpec.describe CustomerUser, type: :model do
     end
 
     it "strips whitespace" do
-      user = create(:customer_user, :with_whitespace)
+      user = create(:customer_user, name: "  Alice  ", surname: "  Brown  ")
+
       expect(user.full_name).to eq("Alice Brown")
     end
 

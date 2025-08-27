@@ -17,24 +17,6 @@ FactoryBot.define do
       generated_password_at { nil }
     end
 
-    trait :with_empty_name do
-      name { "" }
-      surname { "Johnson" }
-      generated_password_at { 1.week.ago }
-    end
-
-    trait :with_empty_surname do
-      name { "Bob" }
-      surname { "" }
-      generated_password_at { nil }
-    end
-
-    trait :with_whitespace do
-      name { " Alice " }
-      surname { " Brown " }
-      generated_password_at { nil }
-    end
-
     trait :recently_generated_password do
       generated_password_at { 1.hour.ago }
     end
