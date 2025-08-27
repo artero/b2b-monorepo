@@ -39,7 +39,13 @@ rails tmp:clear          # Clear Rails cache
 
 ### Testing and Quality
 ```bash
-rails test              # Run tests
+bundle exec rspec       # Run all tests
+bundle exec rspec spec/models/        # Run model tests
+bundle exec rspec spec/controllers/   # Run controller tests
+bundle exec rspec spec/requests/      # Run request tests (API testing)
+bundle exec rspec spec/system/        # Run system tests (browser automation)
+bundle exec rspec spec/mailers/       # Run mailer tests
+bundle exec rspec spec/lib/           # Run library tests
 rubocop                 # Run linter
 brakeman                # Security analysis
 ```
@@ -99,12 +105,34 @@ bundle update           # Update gems
 
 ## Testing Strategy
 
-The project includes test setup with:
-- **Rails testing framework** (standard)
-- **Capybara + Selenium** for system tests
+The project uses **RSpec** as the primary testing framework:
+- **RSpec Rails** for comprehensive testing (models, controllers, requests, system)
+- **FactoryBot** for test data generation (no fixtures)
+- **Capybara + Selenium** for system tests with headless Chrome
 - **Debug gem** for development debugging
 - **Brakeman** for security analysis
 - **RuboCop** for code style (Rails Omakase config)
+
+### Test Structure
+```
+spec/
+├── controllers/     # Controller specs
+├── factories/       # FactoryBot factories
+├── lib/            # Library specs
+├── mailers/        # Mailer specs
+├── models/         # Model specs
+├── requests/       # Request specs (API testing)
+├── system/         # System specs (Capybara)
+├── rails_helper.rb # RSpec Rails configuration
+└── spec_helper.rb  # RSpec base configuration
+```
+
+### Testing Best Practices
+- Use FactoryBot factories instead of fixtures for test data
+- System tests run with Selenium WebDriver in headless Chrome
+- Request specs test API endpoints with full HTTP request/response cycle
+- Model specs cover validations, associations, and business logic
+- Controller specs test routing and request handling
 
 ## Deployment Considerations
 

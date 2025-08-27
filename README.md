@@ -85,6 +85,24 @@ cd backend
 bin/dev
 ```
 
+### Testing
+```bash
+# Run all tests
+cd backend
+rspec
+
+# Run specific test types
+rspec spec/models/        # Model tests
+rspec spec/controllers/   # Controller tests
+rspec spec/requests/      # Request tests (API testing)
+rspec spec/system/        # System tests (browser automation)
+rspec spec/mailers/       # Mailer tests
+
+# Run linting and security checks
+rubocop                   # Code style checking
+brakeman                  # Security analysis
+```
+
 ### Check status
 - **Health check**: `curl http://localhost:3000/health`
 - **Application**: `http://localhost:3000`
