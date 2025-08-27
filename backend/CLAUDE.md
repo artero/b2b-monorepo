@@ -41,8 +41,11 @@ rails tmp:clear          # Clear Rails cache
 ```bash
 bundle exec rspec       # Run all tests
 bundle exec rspec spec/models/        # Run model tests
-bundle exec rspec spec/requests/      # Run request tests  
-bundle exec rspec spec/system/        # Run system tests
+bundle exec rspec spec/controllers/   # Run controller tests
+bundle exec rspec spec/requests/      # Run request tests (API testing)
+bundle exec rspec spec/system/        # Run system tests (browser automation)
+bundle exec rspec spec/mailers/       # Run mailer tests
+bundle exec rspec spec/lib/           # Run library tests
 rubocop                 # Run linter
 brakeman                # Security analysis
 ```
@@ -104,9 +107,8 @@ bundle update           # Update gems
 
 The project uses **RSpec** as the primary testing framework:
 - **RSpec Rails** for comprehensive testing (models, controllers, requests, system)
-- **FactoryBot** for test data generation (replacing fixtures)
+- **FactoryBot** for test data generation (no fixtures)
 - **Capybara + Selenium** for system tests with headless Chrome
-- **RSwag** for API documentation generation from tests
 - **Debug gem** for development debugging
 - **Brakeman** for security analysis
 - **RuboCop** for code style (Rails Omakase config)
@@ -116,22 +118,21 @@ The project uses **RSpec** as the primary testing framework:
 spec/
 ├── controllers/     # Controller specs
 ├── factories/       # FactoryBot factories
-├── integration/     # RSwag API documentation specs
 ├── lib/            # Library specs
 ├── mailers/        # Mailer specs
 ├── models/         # Model specs
 ├── requests/       # Request specs (API testing)
 ├── system/         # System specs (Capybara)
 ├── rails_helper.rb # RSpec Rails configuration
-├── spec_helper.rb  # RSpec base configuration
-└── swagger_helper.rb # RSwag configuration
+└── spec_helper.rb  # RSpec base configuration
 ```
 
-### RSwag API Documentation
-- Configure with `spec/swagger_helper.rb`
-- Create API specs in `spec/integration/` 
-- View documentation at `/api-docs` when server running
-- Supports OpenAPI 3.0 specification
+### Testing Best Practices
+- Use FactoryBot factories instead of fixtures for test data
+- System tests run with Selenium WebDriver in headless Chrome
+- Request specs test API endpoints with full HTTP request/response cycle
+- Model specs cover validations, associations, and business logic
+- Controller specs test routing and request handling
 
 ## Deployment Considerations
 

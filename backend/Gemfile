@@ -78,9 +78,4 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-
-  # RSwag for API documentation
-  gem "rswag-specs"
-  gem "rswag-api"
-  gem "rswag-ui"
 end
