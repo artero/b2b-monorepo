@@ -68,6 +68,7 @@ yarn install
 # Create and migrate database
 rails db:create
 rails db:migrate
+rails db:seed
 
 # Start server with asset compilation
 bin/dev

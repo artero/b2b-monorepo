@@ -51,9 +51,7 @@ ActiveAdmin.register Customer do
           link_to user.full_name, admin_customer_user_path(user)
         end
         column :email
-        column :blocked do |user|
-          status_tag(user.blocked? ? "Blocked" : "Active", user.blocked? ? :error : :ok)
-        end
+        column :blocked
         column "Actions" do |user|
           link_to "View", admin_customer_user_path(user), class: "button"
         end
