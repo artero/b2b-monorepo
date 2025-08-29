@@ -123,7 +123,7 @@ This manual activation process ensures that every customer user has been reviewe
    ```bash
    curl -X POST http://localhost:3000/auth/sign_in \
      -H "Content-Type: application/json" \
-     -d '{"email": "john.doe@customer.com", "password": "password123"}' \
+     -d '{"email": "john.doe@acme.com", "password": "password123"}' \
      -v
    ```
    - **Expected result**:
@@ -137,7 +137,7 @@ This manual activation process ensures that every customer user has been reviewe
    curl -X GET http://localhost:3000/auth/validate_token \
      -H "access-token: [ACCESS_TOKEN_FROM_PREVIOUS_STEP]" \
      -H "client: [CLIENT_TOKEN_FROM_PREVIOUS_STEP]" \
-     -H "uid: john.doe@customer.com" \
+     -H "uid: john.doe@acme.com" \
      -v
    ```
    - **Expected result**:
@@ -151,7 +151,7 @@ This manual activation process ensures that every customer user has been reviewe
    curl -X DELETE http://localhost:3000/auth/sign_out \
      -H "access-token: [ACCESS_TOKEN]" \
      -H "client: [CLIENT_TOKEN]" \
-     -H "uid: john.doe@customer.com" \
+     -H "uid: john.doe@acme.com" \
      -v
    ```
    - **Expected result**:
@@ -165,7 +165,7 @@ This manual activation process ensures that every customer user has been reviewe
 ```bash
 curl -X POST http://localhost:3000/auth/sign_in \
   -H "Content-Type: application/json" \
-  -d '{"email": "john.doe@customer.com", "password": "password123"}' \
+  -d '{"email": "john.doe@acme.com", "password": "password123"}' \
   -v
 ```
 
@@ -174,7 +174,7 @@ curl -X POST http://localhost:3000/auth/sign_in \
 curl -X GET http://localhost:3000/auth/validate_token \
   -H "access-token: [YOUR_ACCESS_TOKEN]" \
   -H "client: [YOUR_CLIENT_TOKEN]" \
-  -H "uid: john.doe@customer.com" \
+  -H "uid: john.doe@acme.com" \
   -v
 ```
 
@@ -183,7 +183,7 @@ curl -X GET http://localhost:3000/auth/validate_token \
 curl -X DELETE http://localhost:3000/auth/sign_out \
   -H "access-token: [YOUR_ACCESS_TOKEN]" \
   -H "client: [YOUR_CLIENT_TOKEN]" \
-  -H "uid: john.doe@customer.com" \
+  -H "uid: john.doe@acme.com" \
   -v
 ```
 
