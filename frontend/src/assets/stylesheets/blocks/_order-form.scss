@@ -1,0 +1,26 @@
+.order-form {
+  padding-right: spacer(2);
+  padding-left: spacer(2);
+  margin-bottom: spacer(2);
+  margin-left: auto;
+  text-align: right;
+
+  &__observations {
+    max-width: 400px;
+    display: block !important;
+    margin-bottom: spacer(2);
+    margin-left: auto;
+  }
+
+  &__shipping {
+    max-width: 400px;
+    display: block !important;
+    margin-left: auto;
+  }
+
+  &__urgent {
+    max-width: 400px;
+    margin-left: auto;
+    margin-bottom: spacer(3);
+  }
+}

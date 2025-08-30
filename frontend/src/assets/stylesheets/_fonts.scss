@@ -1,0 +1,7 @@
+$dir-fonts: '~assets/fonts/';
+$icons-version: '0.8';
+
+@font-face {
+  font-family: 'nvs icons';
+  src: url('#{$dir-fonts}nvs-icons.woff2?v#{$icons-version}') format('woff2'), url('#{$dir-fonts}nvs-icons.woff?v#{$icons-version}') format('woff');
+}

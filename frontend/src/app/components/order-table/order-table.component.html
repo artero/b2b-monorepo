@@ -1,0 +1,118 @@
+<div id="order-print" style="max-width: 100%; overflow-x: auto;">
+  <table *ngIf="order" mat-table [dataSource]="order" class="order-table">
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <i
+          [style.background-color]="hexColorPad(element.HexaColor)"
+          [ngClass]="element.TipoColor ? 'is-' + element.TipoColor : ''"
+          class="icon-color d-block"
+        ></i>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'Common.Name' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <strong>{{ element.Codigo }}</strong> -
+        {{ element.Descripcion }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef colspan="6"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="family">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'Common.Range' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.Subfamilia | translate }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="presentation">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'Common.Format' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.Presentacion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'Common.Boxes' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <input
+          type="number"
+          min="0"
+          max="100"
+          [value]="element.quantity"
+          matTooltip="{{ element.quantity }} cajas de {{
+            element.UdsCaja
+          }} unidades"
+          (input)="onChangeOrder(element, $event)"
+        />
+        <span
+          class="color-gray font-size-xs"
+          [innerHTML]="'Confirm.InputBoxes' | translate: { u: element.UdsCaja }"
+        ></span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="units">
+      <th mat-header-cell *matHeaderCellDef class="text-right">
+        {{ 'Common.Units' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element" class="text-right">
+        {{ element.quantity * element.UdsCaja }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef class="text-right">
+        {{ 'Common.UnitPrice' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element" class="text-right">
+        {{ element.PrecioConDescuento | localeNumber }}€
+      </td>
+      <td mat-footer-cell *matFooterCellDef class="text-right px-1">
+        Total
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef class="text-right">
+        {{ 'Common.Amount' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element" class="text-right">
+        {{ totalRow(element) | localeNumber }}€
+      </td>
+      <td mat-footer-cell *matFooterCellDef class="text-right pl-2">
+        {{ total | localeNumber }}€
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="info">
+      <td mat-footer-cell *matFooterCellDef colspan="8">
+        <h6>{{ 'Common.Boxes' | translate }}</h6>
+        <dl>
+          <ng-container *ngFor="let presentation of presentationsQuantity">
+            <dt>{{ presentation.name }}:</dt>
+            <dd>{{ presentation.quantity }}</dd>
+          </ng-container>
+        </dl>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      matRipple
+      class="order-table__row"
+    ></tr>
+    <tr mat-footer-row *matFooterRowDef="tableFooterColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="tableFooterInfoColumns"></tr>
+  </table>
+</div>

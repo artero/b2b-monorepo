@@ -1,0 +1,94 @@
+.products-table {
+  $header-size: $search-bar-size;
+  width: 100%;
+  height: auto;
+  table-layout: fixed;
+  border-spacing: 0;
+
+  thead th {
+    position: sticky;
+    top: $header-size;
+    z-index: z-index('header');
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: $font-weight-bold;
+    color: $white;
+    background-color: map-get($mat-blue-nvs, 400) !important;
+    border-bottom: 1px solid map-get($mat-blue-nvs, 500);
+  }
+
+  .mat-mdc-header-row {
+    height: $product-table-tr-size;
+  }
+
+  &__row-detail {
+    // stylelint-disable-next-line declaration-no-important
+    height: auto !important;
+    border-color: transparent;
+  }
+
+  &__expandable {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    transition: all .2s ease-out;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .mat-column-expandedDetail {
+    overflow: unset;
+  }
+
+  &__row {
+    cursor: pointer;
+
+    &:hover {
+      color: $primary;
+    }
+
+    td {
+      width: 100px;
+      //padding: 0;
+      background-color: map-get($mat-blue-nvs, 100);
+      transition: border-bottom-color .2s ease-out, background-color .2s ease-out;
+    }
+
+    .mat-cell {
+      color: inherit;
+    }
+
+    .icon-angle-bottom {
+      transition: transform .2s ease-out;
+    }
+
+    &.is-expanded {
+      .icon-angle-bottom {
+        transform: rotate(180deg);
+      }
+
+      td {
+        background-color: $white;
+        border-bottom-color: transparent;
+      }
+    }
+  }
+
+  $columns: (
+    'action': 58px,
+    'total': 60px
+  );
+
+  @each $name, $size in $columns {
+    .mat-column-#{$name} {
+      min-width: $size;
+    }
+  }
+
+  .mat-column-presentation {
+    width: 50%;
+  }
+
+  .mat-column-family {
+    width: 50%;
+  }
+}

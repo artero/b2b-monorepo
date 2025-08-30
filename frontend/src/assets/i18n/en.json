@@ -1,0 +1,73 @@
+{
+  "Common": {
+    "Amount": "Amount",
+    "Boxes": "Boxes",
+    "Format": "Format",
+    "Items": "Items",
+    "Name": "Name",
+    "Range": "Range",
+    "UnitPrice": "Unit Price",
+    "Units": "Units"
+  },
+  "Login": {
+    "Button": "ACCESS",
+    "DownloadText": "For a better experience download the desktop application for <a href='https: //www.pintyplus.com/ftp pintyplus-b2b-windows.zip' class='link'>Windows</a> or for <a href='https: //www.pintyplus.com/ftp/pintyplus-b2b-mac.zip' class='link'>Mac</a>",
+    "ErrorAuth": "Wrong password or username",
+    "Password": "Password",
+    "WelcomeText": "Welcome to the Novasolspray B2B store. If you do not have a password, contact us at <a class='link text-nowrap' href='tel:+34977677305'>+34 977 677 305</a> or by sending an email to <a class='link' href='mailto:novasol@novasolspray.com?subject=NVS B2B Request password'>novasol@novasolspray.com</a>."
+  },
+  "Order": {
+    "ButtonConfirmOrder": "CONFIRM ORDER",
+    "ChangeQuantity": "{{ quantity }} boxes of {{ units }} units.",
+    "Description": "References organized by ranges. Only full boxes accepted.",
+    "Search": "Search",
+    "SearchPlaceholder": "Enter description",
+    "Title": "New order"
+  },
+  "Confirm": {
+    "Confirm": "Confirm",
+    "DateInvalid": "The date is required",
+    "Description": "For any change of invoicing, contact us at <a class='link text-nowrap' href='tel:+34977677305'>+34 977 677 305</a> or send an email to  <a class='link' href='mailto:novasol@novasolspray.com?subject=NVS B2B Invoicing'>novasol@novasolspray.com </a>.",
+    "DownloadPdf": "Descargar PDF",
+    "InputBoxes": " of {{ u }} u.",
+    "ETD": "ETD",
+    "MarkIfUrgent": "Mark if urgent",
+    "ModifyOrder": "Modify order",
+    "Notes": "Notes",
+    "OrderPrint": "Order",
+    "Title": "Confirming order"
+  },
+  "Done": {
+    "ButtonLogout": "Logout",
+    "ButtonOther": "New order",
+    "Description": "We will contact you shortly to confirm the shipping date and send you the legal invoice.",
+    "Title": "Your order has been sent successfully"
+  },
+  "NewPassword": {
+    "Change": "CHANGE PASSWORD",
+    "Checkbox": "I agree to the <a class='link' href='https://www.pintyplus.com/en/privacy-policy/' target='_blank' >Terms of Use</a>, <a class='link' href='https://www.pintyplus.com/en/privacy-policy/' target='_blank'>Cookie Policy</a>, sending news and offers. *",
+    "Description": "Enter the password you will use to access our service, once completed we will redirect you to the login page to enter your email and the new password to access.",
+    "ErrorCookies": "You must accept our Terms of Use, cookie policy, sending news and offers.",
+    "ErrorPasswords": "Passwords do not match",
+    "ErrorToken": "The token is incorrect, contact us to request a new one",
+    "New": "New password",
+    "NoToken": "You need a valid token to change the password, contact us at <a class='link text-nowrap' href='tel:+34977677305'>+34 977 677 305</a> or by sending an email to <a class='link' href='mailto:novasol@novasolspray.com?subject=NVS B2B Request password'>novasol@novasolspray.com</a>.",
+    "Repeat": "Repeat password"
+  },
+  "ACEITES": "OILS",
+  "ANTICALORICA": "HIGH TEMPERATURE",
+  "BOLSA PULSADOR": "NOZZLES BAG",
+  "BRILLO": "GLOSS",
+  "EFECTOS METALIZADOS": "METALLIC EFFECT",
+  "FLUOR": "FLUOR",
+  "IMPRIMACIONES": "PRIMERS",
+  "LIMPIADOR": "CLEANER",
+  "MARCADORES": "MARKERS",
+  "MATE": "MATT",
+  "METALIZADOS": "METALLICS",
+  "PISTOLA": "GUN",
+  "PULSADORES": "NOZZLES",
+  "SATINADOS": "SATIN",
+  "SILUETAS": "STENCILS",
+  "VARIOS": "OTHERS"
+}

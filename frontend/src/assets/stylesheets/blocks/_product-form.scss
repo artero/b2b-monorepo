@@ -1,0 +1,40 @@
+@use 'sass:math';
+
+.product-form {
+  $spacer-thead: 78px;
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  grid-column-gap: math.div($gutter, 2);
+  max-width: 100%;
+  padding-bottom: $gutter;
+  padding-left: $gutter;
+
+  &__image {
+    //padding-top: $spacer-thead;
+    div {
+      position: sticky;
+      top: 110px;
+      height: 400px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      animation: .5s fadeIn ease-out both .2s;
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: math.div($gutter, 2);
+    align-self: flex-start;
+    padding-left: spacer(1);
+
+    h3 {
+      padding-bottom: spacer(1);
+      margin-top: $gutter;
+      margin-bottom: spacer(2);
+      border-bottom: 1px solid $gray-200;
+      grid-column-end: span 2;
+    }
+  }
+}

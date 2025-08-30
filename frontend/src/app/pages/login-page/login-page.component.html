@@ -1,0 +1,50 @@
+<loading *ngIf="isLoading"></loading>
+<div class="container-xs">
+  <mat-card class="p-5">
+    <div class="text-center mv-4">
+      <a
+        class="big-logo mb-3"
+        href="https://www.pintyplus.com/"
+        target="_blank"
+      >
+        <img src="assets/images/pintyplus-b2b-600.png" />
+      </a>
+      <p [innerHTML]="'Login.WelcomeText' | translate"></p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mt-2">
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          formControlName="username"
+          autocomplete="username"
+          placeholder="Email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          formControlName="password"
+          [placeholder]="'Login.Password' | translate"
+          autocomplete="current-password"
+          type="password"
+          required
+          required
+        />
+      </mat-form-field>
+      <div *ngIf="error" class="alert alert-danger mt-1 mb-0">
+        {{ error }}
+      </div>
+      <button
+        [disabled]="isLoading"
+        mat-raised-button
+        color="primary"
+        class="w-100 mt-3"
+      >
+        <span *ngIf="isLoading" class="spinner-border mr-1"></span>
+        {{ 'Login.Button' | translate }}
+      </button>
+    </form>
+  </mat-card>
+</div>

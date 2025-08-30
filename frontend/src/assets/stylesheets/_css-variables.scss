@@ -1,0 +1,50 @@
+@use 'sass:math';
+
+:root {
+  --background: #e8eaf3;
+  --font-size-base: 1rem;
+  --font-size-article: 1.0625rem;
+  --font-size-lg: 1.25rem;
+  --font-size-sm: .875rem;
+  --font-size-xs: .69rem;
+  --font-size-special: 2.2rem;
+  --font-size-h1: 1.875rem;
+  --font-size-h2: 1.5rem;
+  --font-size-h3: 1.25rem;
+  --font-color-primary: #{$gray-600};
+  --font-color-secondary: #{$gray-300};
+  --color-primary: #{$primary};
+  --color-secondary: #{$secondary};
+  --color-link: #{$blue};
+  --edge-xs: 12px;
+  --edge-sm: 22px;
+  --edge-md: 30px;
+  --edge-lg: 40px;
+  --edge-xl: 56px;
+  --edge-xxl: 87px;
+  --edge-opinion: #{math.div($gutter, 2)};
+
+  @include media-breakpoint-up('lg') {
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.5rem;
+    --font-size-h3: 1.25rem;
+    --font-size-special: 3.875rem;
+    --font-size-xs: .75rem;
+    --edge-xs: 18px;
+    --edge-sm: 44px;
+    --edge-lg: 62px;
+    --edge-xl: 87px;
+    --edge-xxl: 125px;
+    --edge-opinion: 6.125rem;
+  }
+
+  @include media-breakpoint-up('xxl') {
+    --font-size-special: 5rem;
+    --edge-xs: 21px;
+    --edge-sm: 42px;
+    --edge-md: 60px;
+    --edge-lg: 82px;
+    --edge-xl: 124px;
+    --edge-xxl: 200px;
+  }
+}

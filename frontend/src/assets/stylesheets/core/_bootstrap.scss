@@ -1,0 +1,20 @@
+//add boostrap spacing https://getbootstrap.com/docs/4.3/utilities/spacing/
+$spacer: 1rem !default;
+
+$container-max-widths: (
+  'xl': 1900px
+);
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1420px,
+  xxl: 1900px
+);
+$grid-columns: 12;
+$grid-gutter-width: 24px;
+
+@import 'bootstrap/scss/mixins/grid';
+@import 'bootstrap/scss/mixins/breakpoints';

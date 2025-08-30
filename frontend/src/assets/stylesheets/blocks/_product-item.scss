@@ -1,0 +1,30 @@
+@use 'sass:math';
+
+.product-item {
+  display: grid;
+  grid-template: 'icon input title' auto / 2em 40px 1fr;
+  grid-column-gap: math.div($gutter, 2);
+  align-items: center;
+  min-height: 30px;
+  margin-bottom: spacer(1);
+
+  &__icon {
+    @extend %icon-color;
+    grid-area: icon;
+    box-sizing: content-box;
+  }
+
+  &__title {
+    grid-area: title;
+  }
+
+  &__input {
+    grid-area: input;
+    width: 100%;
+
+    input {
+      @extend %input-number;
+      max-width: 100%;
+    }
+  }
+}

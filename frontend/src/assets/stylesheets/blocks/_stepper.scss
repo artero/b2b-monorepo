@@ -1,0 +1,21 @@
+.stepper {
+  flex: 1;
+  animation: .5s ease-out fadeIn;
+
+  &.mat-stepper-horizontal {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mat-horizontal-content-container {
+    flex: 1;
+    padding-right: 0;
+    padding-bottom: spacer(5);
+    padding-left: 0;
+    overflow: initial;
+  }
+
+  .mat-horizontal-stepper-header-container {
+    position: relative;
+  }
+}

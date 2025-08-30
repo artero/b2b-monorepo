@@ -1,0 +1,18 @@
+.nvs-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.nvs-auth-page {
+  padding-left: $sidebar-size;
+  background-color: $white;
+}
+
+.nvs-login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+}

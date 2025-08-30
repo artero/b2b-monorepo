@@ -1,0 +1,43 @@
+.nav-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: $sidebar-size;
+  color: $white;
+  background-color: map-get($mat-blue-nvs, 900);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: $sidebar-size;
+    padding: .5rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba($white, .2);
+    }
+
+    [class*='icon-'] {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__logo {
+    width: 90%;
+    height: 90%;
+    background-color: $white;
+    background-image: url('~assets/images/nvs-logo.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 80%;
+    border-radius: 50%;
+  }
+
+  button:hover,
+  button:focus {
+    background: rgba($blue, .5);
+    transition: background-color .3s ease-out;
+  }
+}

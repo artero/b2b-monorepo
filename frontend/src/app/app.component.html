@@ -1,0 +1,8 @@
+<div
+  [@routesAnimations]="
+    o && o.activatedRouteData && o.activatedRouteData['animation']
+  "
+  class="h-100"
+>
+  <router-outlet #o="outlet"></router-outlet>
+</div>
