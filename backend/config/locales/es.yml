@@ -1,6 +1,6 @@
 es:
   hello: "B2B webshop Admin"
-  customer_users:
+  users:
     generate_passwords:
       success: "Contraseña actualizada correctamente."
       error: "Error al actualizar la contraseña."

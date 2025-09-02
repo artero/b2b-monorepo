@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  # DeviseTokenAuth routes for CustomerUser API authentication with custom controllers
-  mount_devise_token_auth_for "CustomerUser", at: "auth", controllers: {
+  # DeviseTokenAuth routes for User API authentication with custom controllers
+  mount_devise_token_auth_for "User", at: "auth", controllers: {
     sessions: "auth/sessions",
     token_validations: "auth/token_validations"
   }
 
   # Custom password generation routes (outside of Devise)
-  resource :generate_passwords, controller: "customer_users/generate_passwords", only: [ :edit, :update, :show ]
+  resource :generate_passwords, controller: "users/generate_passwords", only: [ :edit, :update, :show ]
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

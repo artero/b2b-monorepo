@@ -1,16 +1,16 @@
-ActiveAdmin.register CustomerUser do
-  permit_params :name, :surname, :phone_number, :email, :customer_id, :blocked
+ActiveAdmin.register User do
+  permit_params :name, :surname, :phone_number, :email, :business_partner_id, :blocked
 
   # Menu configuration
-  menu priority: 3, label: "Customer Users"
+  menu priority: 3, label: "Users"
 
   # Scopes for filtering
   scope :all, default: true
-  scope :active, -> { CustomerUser.active }
-  scope :blocked, -> { CustomerUser.blocked }
+  scope :active, -> { User.active }
+  scope :blocked, -> { User.blocked }
 
   # Filters
-  filter :customer, as: :select, collection: -> { Customer.order(:name) }
+  filter :business_partner, as: :select, collection: -> { BusinessPartner.order(:name) }
   filter :name
   filter :surname
   filter :email
@@ -20,14 +20,14 @@ ActiveAdmin.register CustomerUser do
   filter :updated_at
 
   # Index page
-  index title: "Customer Users" do
+  index title: "Users" do
     selectable_column
     column :name do |user|
-      link_to user.full_name, admin_customer_user_path(user)
+      link_to user.full_name, admin_user_path(user)
     end
     column :email
-    column :customer do |user|
-      link_to user.customer.name, admin_customer_path(user.customer)
+    column :business_partner do |user|
+      link_to user.business_partner.name, admin_business_partner_path(user.business_partner)
     end
       column :blocked
     column :created_at, sortable: :created_at do |user|
@@ -35,7 +35,7 @@ ActiveAdmin.register CustomerUser do
     end
     actions do |user|
       unless user.encrypted_password.present?
-        item "Generate Password", generate_password_admin_customer_user_path(user),
+        item "Generate Password", generate_password_admin_user_path(user),
              method: :post, class: "button",
              data: { confirm: "Send password generation email to #{user.email}?" }
       end
@@ -51,8 +51,8 @@ ActiveAdmin.register CustomerUser do
       row :full_name
       row :email
       row :phone_number
-      row :customer do |user|
-        link_to user.customer.name, admin_customer_path(user.customer)
+      row :business_partner do |user|
+        link_to user.business_partner.name, admin_business_partner_path(user.business_partner)
       end
       row :blocked
       # row "Password Status" do |user|
@@ -73,11 +73,11 @@ ActiveAdmin.register CustomerUser do
     panel "Actions" do
       div do
         unless resource.encrypted_password.present?
-          link_to "Generate Password", generate_password_admin_customer_user_path(resource),
+          link_to "Generate Password", generate_password_admin_user_path(resource),
                   method: :post, class: "button",
                   data: { confirm: "Send password generation email to #{resource.email}?" }
         else
-          link_to "Resend Password Instructions", generate_password_admin_customer_user_path(resource),
+          link_to "Resend Password Instructions", generate_password_admin_user_path(resource),
                   method: :post, class: "button",
                   data: { confirm: "Resend password generation email to #{resource.email}?" }
         end
@@ -96,11 +96,11 @@ ActiveAdmin.register CustomerUser do
       f.input :phone_number, hint: "Optional contact number"
     end
 
-    f.inputs "Customer Assignment" do
-      f.input :customer, as: :select,
-              collection: Customer.order(:name).collect { |c| [ c.name, c.id ] },
+    f.inputs "Business Partner Assignment" do
+      f.input :business_partner, as: :select,
+              collection: BusinessPartner.order(:name).collect { |c| [ c.name, c.id ] },
               required: true,
-              hint: "Select the customer this user belongs to"
+              hint: "Select the business partner this user belongs to"
     end
 
     f.inputs "Access Control" do
@@ -117,31 +117,31 @@ ActiveAdmin.register CustomerUser do
     else
       flash[:error] = "Failed to send password generation email"
     end
-    redirect_to admin_customer_user_path(resource)
+    redirect_to admin_user_path(resource)
   end
 
   # Controller customizations
   controller do
     def create
       # Use the custom method that doesn't require a password
-      @customer_user = CustomerUser.create_without_password(permitted_params[:customer_user])
+      @user = User.create_without_password(permitted_params[:user])
 
-      if @customer_user.persisted?
+      if @user.persisted?
         # Send password generation email after creation
-        @customer_user.send_password_generation_instructions
-        flash[:notice] = "Customer User created successfully. Password generation email sent to #{@customer_user.email}."
-        redirect_to admin_customer_user_path(@customer_user)
+        @user.send_password_generation_instructions
+        flash[:notice] = "User created successfully. Password generation email sent to #{@user.email}."
+        redirect_to admin_user_path(@user)
       else
-        flash.now[:error] = "Failed to create Customer User."
+        flash.now[:error] = "Failed to create User."
         render :new
       end
     end
 
     def update
       # Don't allow updating password through admin interface
-      if params[:customer_user]
-        params[:customer_user].delete("encrypted_password")
-        params[:customer_user].delete(:encrypted_password)
+      if params[:user]
+        params[:user].delete("encrypted_password")
+        params[:user].delete(:encrypted_password)
       end
       super
     end

@@ -1,5 +1,5 @@
 class Api::OrdersController < ApiController
-  before_action :authenticate_customer_user!
+  before_action :authenticate_user!
 
   def index
     orders = load_mock_orders

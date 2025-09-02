@@ -5,8 +5,8 @@ class AddDeviseTokenAuthToCustomerUsers < ActiveRecord::Migration[8.0]
     add_column :customer_users, :tokens, :text
 
     # Update existing users
-    CustomerUser.reset_column_information
-    CustomerUser.find_each do |user|
+    User.reset_column_information
+    User.find_each do |user|
       user.uid = user.email
       user.provider = 'email'
       user.save!

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe CustomerUserMailer, type: :mailer do
+RSpec.describe UserMailer, type: :mailer do
   describe "#password_generation_instructions" do
-    let(:user) { create(:customer_user) }
+    let(:user) { create(:user) }
     let(:token) { "sample-token" }
-    let(:mail) { CustomerUserMailer.password_generation_instructions(user, token) }
+    let(:mail) { UserMailer.password_generation_instructions(user, token) }
 
     it "has correct subject" do
       expect(mail.subject).to eq("Genera tu contraseña - Acceso al sistema")

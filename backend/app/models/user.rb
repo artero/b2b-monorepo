@@ -1,11 +1,11 @@
-class CustomerUser < ApplicationRecord
+class User < ApplicationRecord
   # Include DeviseTokenAuth concerns first
   include DeviseTokenAuth::Concerns::User
 
   # Devise modules - DeviseTokenAuth overrides database_authenticatable
   devise :database_authenticatable, :recoverable, :rememberable
 
-  belongs_to :customer
+  belongs_to :business_partner
 
   # Ensure uid is set to email before validation for DeviseTokenAuth
   before_validation :set_uid
@@ -13,17 +13,17 @@ class CustomerUser < ApplicationRecord
   validates :name, presence: true
   validates :surname, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :customer_id, presence: true
+  validates :business_partner_id, presence: true
 
   scope :active, -> { where(blocked: false) }
   scope :blocked, -> { where(blocked: true) }
 
   def self.ransackable_attributes(auth_object = nil)
-    [ "blocked", "created_at", "customer_id", "email", "id", "name", "phone_number", "surname", "updated_at" ]
+    [ "blocked", "created_at", "business_partner_id", "email", "id", "name", "phone_number", "surname", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "customer" ]
+    [ "business_partner" ]
   end
 
   def full_name
@@ -45,13 +45,13 @@ class CustomerUser < ApplicationRecord
   end
 
   def send_password_generation_instructions
-    raw, hashed = Devise.token_generator.generate(CustomerUser, :reset_password_token)
+    raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
     self.reset_password_token = hashed
     self.reset_password_sent_at = Time.now.utc
     self.generated_password_at = nil
 
     if self.save
-      CustomerUserMailer.password_generation_instructions(self, raw).deliver_now
+      UserMailer.password_generation_instructions(self, raw).deliver_now
       true
     else
       false

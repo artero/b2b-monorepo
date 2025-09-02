@@ -1,12 +1,12 @@
 FactoryBot.define do
-  factory :customer_user do
+  factory :user do
     sequence(:name) { |n| "User#{n}" }
     sequence(:surname) { |n| "Surname#{n}" }
     sequence(:email) { |n| "user#{n}@example.com" }
     sequence(:phone_number) { |n| "+123456789#{n}" }
     password { "password123" }
     password_confirmation { "password123" }
-    association :customer
+    association :business_partner
     blocked { false }
     generated_password_at { 2.days.ago }
     provider { "email" }
