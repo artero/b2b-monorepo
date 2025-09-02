@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   scope :active, -> { where(blocked: false) }
   scope :blocked, -> { where(blocked: true) }
+  scope :with_business_partner, -> { includes(:business_partner) }
 
   def self.ransackable_attributes(auth_object = nil)
     [ "blocked", "created_at", "business_partner_id", "email", "id", "name", "phone_number", "surname", "updated_at" ]

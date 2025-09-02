@@ -4,6 +4,10 @@ ActiveAdmin.register User do
   # Menu configuration
   menu priority: 3, label: "Users"
 
+  scope_to do
+    User.with_business_partner
+  end
+
   # Scopes for filtering
   scope :all, default: true
   scope :active, -> { User.active }
