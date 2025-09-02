@@ -1,14 +1,14 @@
-# Create Customer User Feature
+# Create User Feature
 
 ## Feature Description
 
-This feature allows a system administrator to create a customer user and activate them by sending password instructions. The process includes automatic email generation with instructions for the customer user to set their initial password.
+This feature allows a system administrator to create a user and activate them by sending password instructions. The process includes automatic email generation with instructions for the user to set their initial password.
 
 ### Business Context
 
-The client has implemented a controlled access model for their B2B service. Rather than providing open registration, they want to grant access only to customers who meet specific business requirements and criteria.
+The client has implemented a controlled access model for their B2B service. Rather than providing open registration, they want to grant access only to business partners who meet specific business requirements and criteria.
 
-This manual activation process ensures that every customer user has been reviewed and approved by the administration team before gaining access to the B2B platform.
+This manual activation process ensures that every user has been reviewed and approved by the administration team before gaining access to the B2B platform.
 
 ## Users Involved
 
@@ -16,12 +16,12 @@ This manual activation process ensures that every customer user has been reviewe
 - **Role**: System administrator
 - **Responsibilities**: 
   - Access the ActiveAdmin administration panel
-  - Navigate to the Customer Users section
+  - Navigate to the Users section
   - Send password instructions to existing users
   - Verify that instructions have been sent successfully
 
-### Customer User (John Doe)
-- **Role**: System customer user
+### User (John Doe)
+- **Role**: System user
 - **Responsibilities**:
   - Receive email with password instructions
   - Generate a new password following the email link
@@ -46,8 +46,8 @@ This manual activation process ensures that every customer user has been reviewe
 
 ### Main Models
 - **AdminUser**: Administrator user with panel access
-- **CustomerUser**: Customer user who will receive instructions
-- **Customer**: Customer entity associated with the user
+- **User**: User who will receive instructions
+- **BusinessPartner**: Business partner entity associated with the user
 
 ## Acceptance Tests
 
@@ -58,7 +58,7 @@ This manual activation process ensures that every customer user has been reviewe
 - An AdminUser must exist with credentials:
   - Email: admin@example.com
   - Password: password
-- A CustomerUser "John Doe" must exist in the system
+- A User "John Doe" must exist in the system
 
 ### Scenario 1: Admin sends password instructions
 
@@ -71,9 +71,9 @@ This manual activation process ensures that every customer user has been reviewe
    - Click "Log in"
    - **Expected result**: Successful login, redirect to administration dashboard
 
-2. **Navigate to Customer Users**
-   - Click on "Customer Users" in the ActiveAdmin side menu
-   - **Expected result**: Customer Users list is displayed
+2. **Navigate to Users**
+   - Click on "Users" in the ActiveAdmin side menu
+   - **Expected result**: Users list is displayed
 
 3. **Select John Doe**
    - Locate and click on user "John Doe" in the list
@@ -92,7 +92,7 @@ This manual activation process ensures that every customer user has been reviewe
    - Select "Logout"
    - **Expected result**: Successful logout, redirect to login page
 
-### Scenario 2: Customer User receives and processes instructions
+### Scenario 2: User receives and processes instructions
 
 **Steps:**
 1. **Verify sent email**

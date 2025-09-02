@@ -1,50 +1,50 @@
 require 'rails_helper'
 
-RSpec.describe CustomerUser, type: :model do
+RSpec.describe User, type: :model do
   describe "#full_name" do
     it "returns concatenated name and surname" do
-      user = create(:customer_user, name: "John", surname: "Doe")
+      user = create(:user, name: "John", surname: "Doe")
       expect(user.full_name).to eq("John Doe")
     end
 
     it "strips whitespace" do
-      user = create(:customer_user, name: "  Alice  ", surname: "  Brown  ")
+      user = create(:user, name: "  Alice  ", surname: "  Brown  ")
 
       expect(user.full_name).to eq("Alice Brown")
     end
 
     it "handles empty name" do
-      user = build_stubbed(:customer_user, name: "", surname: "Johnson")
+      user = build_stubbed(:user, name: "", surname: "Johnson")
       expect(user.full_name).to eq("Johnson")
     end
 
     it "handles empty surname" do
-      user = build_stubbed(:customer_user, name: "Bob", surname: "")
+      user = build_stubbed(:user, name: "Bob", surname: "")
       expect(user.full_name).to eq("Bob")
     end
   end
 
   describe "#generated_password_at" do
     it "is present when password was generated" do
-      user = create(:customer_user)
+      user = create(:user)
       expect(user.generated_password_at).not_to be_nil
       expect(user.generated_password_at).to be < Time.current
     end
 
     it "is nil when password was not generated" do
-      user = create(:customer_user, :blocked)
+      user = create(:user, :blocked)
       expect(user.generated_password_at).to be_nil
     end
 
     it "tracks recent password generation" do
-      user = create(:customer_user, :recently_generated_password)
+      user = create(:user, :recently_generated_password)
       expect(user.generated_password_at).not_to be_nil
     end
   end
 
   describe "#send_password_generation_instructions" do
     it "generates token and sets timestamp" do
-      user = create(:customer_user, :blocked)
+      user = create(:user, :blocked)
 
       expect(user.reset_password_token).to be_nil
       expect(user.reset_password_sent_at).to be_nil
@@ -60,7 +60,7 @@ RSpec.describe CustomerUser, type: :model do
     end
 
     it "sends email" do
-      user = create(:customer_user, :blocked)
+      user = create(:user, :blocked)
 
       expect {
         user.send_password_generation_instructions
@@ -68,7 +68,7 @@ RSpec.describe CustomerUser, type: :model do
     end
 
     it "returns false on validation error" do
-      user = create(:customer_user, :blocked)
+      user = create(:user, :blocked)
       user.email = nil
 
       result = user.send_password_generation_instructions
@@ -77,7 +77,7 @@ RSpec.describe CustomerUser, type: :model do
     end
 
     it "clears generated_password_at" do
-      user = create(:customer_user)
+      user = create(:user)
       expect(user.generated_password_at).not_to be_nil
 
       user.send_password_generation_instructions
@@ -89,7 +89,7 @@ RSpec.describe CustomerUser, type: :model do
 
   describe "token validation" do
     it "is valid within 24 hours" do
-      user = create(:customer_user, :blocked)
+      user = create(:user, :blocked)
       user.send_password_generation_instructions
 
       # Simulate token generated 23 hours ago
@@ -100,7 +100,7 @@ RSpec.describe CustomerUser, type: :model do
     end
 
     it "expires after 24 hours" do
-      user = create(:customer_user, :blocked)
+      user = create(:user, :blocked)
       user.send_password_generation_instructions
 
       # Simulate token generated 25 hours ago

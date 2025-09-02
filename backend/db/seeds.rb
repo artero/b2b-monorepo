@@ -31,55 +31,55 @@ if Rails.env.development?
     end
   end
 
-  # Create sample customers
-  Customer.find_or_create_by!(code: 'ACME001') do |customer|
-    customer.name = 'ACME Corporation'
-    customer.email = 'contact@acme.com'
+  # Create sample business partners
+  BusinessPartner.find_or_create_by!(ln_id: 'ACME001') do |business_partner|
+    business_partner.name = 'ACME Corporation'
+    business_partner.email = 'contact@acme.com'
   end
 
-  Customer.find_or_create_by!(code: 'TECH002') do |customer|
-    customer.name = 'TechnoSoft Solutions'
-    customer.email = 'info@technosoft.com'
+  BusinessPartner.find_or_create_by!(ln_id: 'TECH002') do |business_partner|
+    business_partner.name = 'TechnoSoft Solutions'
+    business_partner.email = 'info@technosoft.com'
   end
 
-  Customer.find_or_create_by!(code: 'GLOBAL003') do |customer|
-    customer.name = 'Global Industries'
-    customer.email = nil  # Testing optional email
+  BusinessPartner.find_or_create_by!(ln_id: 'GLOBAL003') do |business_partner|
+    business_partner.name = 'Global Industries'
+    business_partner.email = nil  # Testing optional email
   end
 
-  # Create sample customer users (without passwords initially)
-  acme = Customer.find_by(code: 'ACME001')
-  techno = Customer.find_by(code: 'TECH002')
-  global = Customer.find_by(code: 'GLOBAL003')
+  # Create sample users (without passwords initially)
+  acme = BusinessPartner.find_by(ln_id: 'ACME001')
+  techno = BusinessPartner.find_by(ln_id: 'TECH002')
+  global = BusinessPartner.find_by(ln_id: 'GLOBAL003')
 
-  unless CustomerUser.exists?(email: 'john.doe@acme.com')
-    CustomerUser.create_without_password(
+  unless User.exists?(email: 'john.doe@acme.com')
+    User.create_without_password(
       name: 'John',
       surname: 'Doe',
       phone_number: '+1234567890',
       email: 'john.doe@acme.com',
-      customer: acme,
+      business_partner: acme,
       blocked: false
     )
   end
 
-  unless CustomerUser.exists?(email: 'jane.smith@technosoft.com')
-    CustomerUser.create_without_password(
+  unless User.exists?(email: 'jane.smith@technosoft.com')
+    User.create_without_password(
       name: 'Jane',
       surname: 'Smith',
       phone_number: '+0987654321',
       email: 'jane.smith@technosoft.com',
-      customer: techno,
+      business_partner: techno,
       blocked: false
     )
   end
 
-  unless CustomerUser.exists?(email: 'blocked.user@global.com')
-    CustomerUser.create_without_password(
+  unless User.exists?(email: 'blocked.user@global.com')
+    User.create_without_password(
       name: 'Blocked',
       surname: 'User',
       email: 'blocked.user@global.com',
-      customer: global,
+      business_partner: global,
       blocked: true
     )
   end

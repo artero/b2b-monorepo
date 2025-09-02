@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Authentication", type: :request do
   let!(:active_user) do
-    create(:customer_user, password: "password123", password_confirmation: "password123")
+    create(:user, password: "password123", password_confirmation: "password123")
   end
 
   let!(:blocked_user) do
-    create(:customer_user, :blocked, password: "password123", password_confirmation: "password123")
+    create(:user, :blocked, password: "password123", password_confirmation: "password123")
   end
 
   describe "POST /auth/sign_in" do

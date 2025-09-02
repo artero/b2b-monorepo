@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApiController
-  before_action :authenticate_customer_user!
+  before_action :authenticate_user!
 
   def index
     products = load_mock_products

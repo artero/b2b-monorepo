@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe CustomerUsers::GeneratePasswordsController, type: :controller do
+RSpec.describe Users::GeneratePasswordsController, type: :controller do
   describe "GET #edit" do
     context "with expired token" do
       it "redirects with error" do
-        user = create(:customer_user, :blocked)
+        user = create(:user, :blocked)
         user.send_password_generation_instructions
 
         # Create a raw token for testing
         raw_token = Devise.friendly_token
-        hashed_token = Devise.token_generator.digest(CustomerUser, :reset_password_token, raw_token)
+        hashed_token = Devise.token_generator.digest(User, :reset_password_token, raw_token)
 
         # Set expired timestamp (25 hours ago)
         user.update_columns(
@@ -26,12 +26,12 @@ RSpec.describe CustomerUsers::GeneratePasswordsController, type: :controller do
 
     context "with valid token within 24 hours" do
       it "allows access" do
-        user = create(:customer_user, :blocked)
+        user = create(:user, :blocked)
         user.send_password_generation_instructions
 
         # Create a raw token for testing
         raw_token = Devise.friendly_token
-        hashed_token = Devise.token_generator.digest(CustomerUser, :reset_password_token, raw_token)
+        hashed_token = Devise.token_generator.digest(User, :reset_password_token, raw_token)
 
         # Set valid timestamp (23 hours ago)
         user.update_columns(
