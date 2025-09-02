@@ -4,6 +4,10 @@ ActiveAdmin.register BusinessPartner do
   # Menu configuration
   menu priority: 2, label: "Business Partners"
 
+  scope_to do
+    BusinessPartner.with_users
+  end
+
   # Filters
   filter :name
   filter :ln_id
