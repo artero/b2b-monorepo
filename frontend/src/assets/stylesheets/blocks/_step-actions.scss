@@ -7,10 +7,14 @@
   padding: spacer(1);
   text-align: right;
   background-color: rgba($primary, .8);
-  animation: AnimationStepActions .2s ease-out .5s both;
+  animation: animation-step-actions .2s ease-out .5s both;
+
+  &:not(.is-visible) {
+    display: none;
+  }
 }
 
-@keyframes AnimationStepActions {
+@keyframes animation-step-actions {
   from {
     bottom: -50px;
   }

@@ -4,8 +4,8 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
         <i
-          [style.background-color]="hexColorPad(element.HexaColor)"
-          [ngClass]="element.TipoColor ? 'is-' + element.TipoColor : ''"
+        [style.background-color]="hexColorPad(element.color)"
+
           class="icon-color d-block"
         ></i>
       </td>
@@ -16,8 +16,8 @@
         {{ 'Common.Name' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        <strong>{{ element.Codigo }}</strong> -
-        {{ element.Descripcion }}
+        <strong>{{ element.code }}</strong> -
+        {{element.brand }} {{ element.name }}
       </td>
       <td mat-footer-cell *matFooterCellDef colspan="6"></td>
     </ng-container>
@@ -27,7 +27,7 @@
         {{ 'Common.Range' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ element.Subfamilia | translate }}
+        {{ element.family | translate }}
       </td>
     </ng-container>
 
@@ -35,7 +35,7 @@
       <th mat-header-cell *matHeaderCellDef>
         {{ 'Common.Format' | translate }}
       </th>
-      <td mat-cell *matCellDef="let element">{{ element.Presentacion }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.size }}</td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">
@@ -49,13 +49,13 @@
           max="100"
           [value]="element.quantity"
           matTooltip="{{ element.quantity }} cajas de {{
-            element.UdsCaja
+            element.units_per_box
           }} unidades"
           (input)="onChangeOrder(element, $event)"
         />
         <span
           class="color-gray font-size-xs"
-          [innerHTML]="'Confirm.InputBoxes' | translate: { u: element.UdsCaja }"
+          [innerHTML]="'Confirm.InputBoxes' | translate: { u: element.units_per_box }"
         ></span>
       </td>
     </ng-container>
@@ -65,7 +65,7 @@
         {{ 'Common.Units' | translate }}
       </th>
       <td mat-cell *matCellDef="let element" class="text-right">
-        {{ element.quantity * element.UdsCaja }}
+        {{ element.quantity * element.units_per_box }}
       </td>
     </ng-container>
 
@@ -74,7 +74,7 @@
         {{ 'Common.UnitPrice' | translate }}
       </th>
       <td mat-cell *matCellDef="let element" class="text-right">
-        {{ element.PrecioConDescuento | localeNumber }}€
+        {{ element.price | localeNumber }}€
       </td>
       <td mat-footer-cell *matFooterCellDef class="text-right px-1">
         Total
@@ -97,9 +97,9 @@
       <td mat-footer-cell *matFooterCellDef colspan="8">
         <h6>{{ 'Common.Boxes' | translate }}</h6>
         <dl>
-          <ng-container *ngFor="let presentation of presentationsQuantity">
-            <dt>{{ presentation.name }}:</dt>
-            <dd>{{ presentation.quantity }}</dd>
+          <ng-container *ngFor="let size of sizesQuantity">
+            <dt>{{ size.name }}:</dt>
+            <dd>{{ size.quantity }}</dd>
           </ng-container>
         </dl>
       </td>

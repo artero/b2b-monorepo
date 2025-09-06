@@ -37,10 +37,7 @@ export class ProductsTableComponent {
   }
 
   formatDescription(product: ProductCart): string {
-    const description = product.Descripcion;
-    const tipo = product.TipodeMarca;
-
-    return description.replace(tipo, '');
+    return product.name;
   }
 
   getBrand(products: ProductFamily[]): string {
@@ -49,16 +46,16 @@ export class ProductsTableComponent {
 
   getTotal(product: ProductCart) {
     return (
-      product.quantity * Number(product.UdsCaja) * product.PrecioConDescuento
+      product.quantity * Number(product.units_per_box) * product.price
     );
   }
 
-  getPresentationProducts(
-    presentation: string,
+  getSizeProducts(
+    size: string,
     products: ProductCart[]
   ): ProductCart[] {
     return products.filter(
-      (product: ProductCart) => product.Presentacion === presentation
+      (product: ProductCart) => product.size === size
     );
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrderLineas, EmailOrder } from '../models/product.model';
+import { OrderLine, EmailOrder } from '../models/product.model';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -14,20 +14,18 @@ export class EmailService {
       'https://b2b.novasolpinturas.com/send_252354212134.php',
       {
         ...this.userService.getCurrentUser(),
-        Observaciones: order.Observaciones,
-        Lineas: buildLineas(order.Lineas),
-        TotalBoxes: order.TotalBoxes,
+        observations: order.observations,
+        lines: buildLines(order.lines),
+        total_boxes: order.total_boxes,
       }
     );
   }
 }
 
-function buildLineas(lineas: OrderLineas[]) {
+function buildLines(lines: OrderLine[]) {
   let result = '';
-
-  lineas.forEach((linea: OrderLineas) => {
-    result += `<p><b>Código ${linea.CodArt}</b>: ${linea.Unidades} Unidades</p>`;
+  lines.forEach((line: OrderLine) => {
+    result += `<p><b>Código ${line.code}</b>: ${line.quantity} Unidades</p>`;
   });
-
   return result;
 }

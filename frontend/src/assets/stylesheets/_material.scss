@@ -103,8 +103,16 @@ $nvs-b2b-theme: mat.define-light-theme(
   @include mat.all-component-densities(-3);
 }
 
-th.mat-mdc-header-cell:first-of-type, td.mat-mdc-cell:first-of-type, td.mat-mdc-footer-cell:first-of-type {
+th.mat-mdc-header-cell:first-of-type,
+td.mat-mdc-cell:first-of-type,
+td.mat-mdc-footer-cell:first-of-type {
   padding-left: 24px;
+}
+
+th.mat-mdc-header-cell:last-of-type,
+td.mat-mdc-cell:last-of-type,
+td.mat-mdc-footer-cell:last-of-type {
+  padding-right: 24px;
 }
 
 .mat-mdc-table {
