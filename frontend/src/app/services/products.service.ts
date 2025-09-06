@@ -19,17 +19,18 @@ export class ProductsService {
 
   getAll() {
     return this.http
-      .post('articulos', {
-        DesdeArticulo: '',
-        HastaArticulo: ''
-      })
-      .pipe(map(buildProducts), map(buildFamilies));
+      .get('api/articles')
+      .pipe(
+        map((response: any) => response.products), // Extraer products de la respuesta
+        map(buildProducts), 
+        map(buildFamilies)
+      );
   }
 
   createOrder(order: Order) {
-    return this.http.post('pedido', {
-      Observaciones: order.Observaciones,
-      Lineas: order.Lineas
+    return this.http.post('api/orders', {
+      observations: order.observations,
+      lines: order.lines
     });
   }
 }
@@ -50,28 +51,28 @@ function buildProducts(products: Product[]): ProductCart[] {
 function buildFamilies(products: ProductCart[]): ProductFamily[] {
   const differentFamilies: DifferentFamily[] = [];
 
-  products.forEach(({ TipodeMarca, Subfamilia }: Product) => {
+  products.forEach(({ brand, family }: Product) => {
     if (
       !(
         differentFamilies.length &&
         differentFamilies.find(
           (b: DifferentFamily) =>
-            TipodeMarca === b.TipodeMarca && Subfamilia === b.Subfamilia
+            brand === b.brand && family === b.family
         )
       )
     ) {
       differentFamilies.push({
-        TipodeMarca,
-        Subfamilia
+        brand,
+        family
       });
     }
   });
 
   differentFamilies.sort((a: DifferentFamily, b: DifferentFamily) => {
-    if (a.TipodeMarca > b.TipodeMarca) {
+    if (a.brand > b.brand) {
       return 1;
     }
-    if (a.TipodeMarca < b.TipodeMarca) {
+    if (a.brand < b.brand) {
       return -1;
     }
 
@@ -80,33 +81,33 @@ function buildFamilies(products: ProductCart[]): ProductFamily[] {
 
   const families: ProductFamily[] = [];
 
-  differentFamilies.forEach((brand: DifferentFamily) => {
+  differentFamilies.forEach((brandFamily: DifferentFamily) => {
     const familyProducts = products.filter(
       (product: Product) =>
-        product.TipodeMarca === brand.TipodeMarca &&
-        product.Subfamilia === brand.Subfamilia
+        product.brand === brandFamily.brand &&
+        product.family === brandFamily.family
     );
 
     families.push({
-      brand: brand.TipodeMarca,
-      family: brand.Subfamilia || '',
-      presentations: [
+      brand: brandFamily.brand,
+      family: brandFamily.family || '',
+      sizes: [
         ...new Set(
           familyProducts
-            .filter((product: Product) => product.Presentacion)
-            .map((product: Product) => product.Presentacion)
+            .filter((product: Product) => product.size)
+            .map((product: Product) => product.size)
         )
       ],
-      colorTypes: [
+      colors: [
         ...new Set(
           familyProducts
-            .filter((product: Product) => product.TipoColor)
-            .map((product: Product) => product.TipoColor)
+            .filter((product: Product) => product.color)
+            .map((product: Product) => product.color)
         )
       ],
       products: familyProducts,
       total: familyProducts.length,
-      image: imageProduct(`${brand.TipodeMarca}-${brand.Subfamilia}`)
+      image: imageProduct(`${brandFamily.brand}-${brandFamily.family}`)
     });
   });
 

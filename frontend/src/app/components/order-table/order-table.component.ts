@@ -17,7 +17,7 @@ export class OrderTableComponent {
       return;
     }
     this._order = order;
-    this.presentationsQuantity = presentationsQuantity(order);
+    this.sizesQuantity = sizesQuantity(order);
   }
   get order(): ProductCart[] {
     return this._order;
@@ -27,7 +27,7 @@ export class OrderTableComponent {
 
   private _order: ProductCart[] = [];
 
-  presentationsQuantity: PresentationQuantity[] = [];
+  sizesQuantity: PresentationQuantity[] = [];
   displayedColumns: string[] = [
     'color',
     'name',
@@ -47,9 +47,9 @@ export class OrderTableComponent {
   }
 
   totalRow(product: ProductCart): number {
-    const uds = Number(product.UdsCaja) || 1;
+    const uds = Number(product.units_per_box) || 1;
 
-    return product.quantity * uds * product.PrecioConDescuento;
+    return product.quantity * uds * product.price;
   }
 
   onChangeOrder(product: ProductCart, e: Event) {
@@ -61,20 +61,20 @@ export class OrderTableComponent {
   }
 }
 
-function presentationsQuantity(order: ProductCart[]): PresentationQuantity[] {
+function sizesQuantity(order: ProductCart[]): PresentationQuantity[] {
   let result = [];
 
   order.forEach((orderItem: ProductCart) => {
     const productCardFound = result.find(
       (resultItem: { name: string; quantity: number }) =>
-        resultItem.name === orderItem.Presentacion
+        resultItem.name === orderItem.size
     );
 
     if (!!productCardFound) {
       productCardFound.quantity += orderItem.quantity;
     } else {
       result.push({
-        name: orderItem.Presentacion,
+        name: orderItem.size,
         quantity: orderItem.quantity
       });
     }

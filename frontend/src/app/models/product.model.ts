@@ -3,24 +3,14 @@ export enum ColorType {
 }
 
 export interface Product {
-  Codigo: string; // code
-  Descripcion: string; // BEIGE
-  TipodeMarca: string; // Evolution
-  Presentacion: string; // 270cc
-  HexaColor: string; // #7F7D7C
-  TipoColor: ColorType; // metal
-  Familia: string; // Pintura
-  Subfamilia: string; // Evolution Metalizada
-  UdsCaja: string; // 0
-  UnidadVenta: string; // Unidades
-  CodigoBarras: string; // code
-  PrecioSinDescuento: number; // 0.0
-  DescuentoEquivalente: number; // 54.0
-  Descuento1: number; // 50.0
-  Descuento2: number; // 8.0
-  Descuento3: number; // 0.0
-  Descuento4: number; // 0.0
-  PrecioConDescuento: number; // 0.0;
+  code: string;           // PP-R1010-400
+  name: string;           // Pintura Acrílica Roja Brillante
+  brand: string;          // PintyPlus
+  size: string;           // 400ml
+  color: string;          // Rojo
+  family: string;         // Basic
+  units_per_box: number;  // 12
+  price: number;          // 8.50
 }
 
 export interface ProductCart extends Product {
@@ -33,31 +23,31 @@ export interface PresentationQuantity {
 }
 
 export interface ProductFamily {
-  brand: string; // Evolution
-  family: string; // Evolution Metalizada
-  presentations?: string[]; // ['270cc']
-  colorTypes?: ColorType[]; // ['Brillo', 'Satinado']
+  brand: string;            // PintyPlus
+  family: string;           // Basic, Evolution, Tech
+  sizes?: string[];         // ['200ml', '400ml', '600ml']
+  colors?: string[];        // ['Rojo', 'Azul', 'Verde']
   products?: ProductCart[]; // list of products
-  total: number; // total of products
-  image?: string; // image of product
-  detailRow?: boolean; // if view Detail Row
+  total: number;            // total of products
+  image?: string;           // image of product
+  detailRow?: boolean;      // if view Detail Row
 }
 
-export interface OrderLineas {
-  CodArt: string;
-  Unidades: number;
+export interface OrderLine {
+  code: string;    // Código del artículo
+  quantity: number; // Cantidad
 }
 
 export interface Order {
-  Observaciones: string;
-  Lineas: OrderLineas[];
+  observations: string;  // Observaciones del pedido
+  lines: OrderLine[];    // Líneas del pedido
 }
 
 export interface EmailOrder extends Order {
-  TotalBoxes: number;
+  total_boxes: number;  // Total de cajas
 }
 
 export interface DifferentFamily {
-  TipodeMarca: string; // Evolution
-  Subfamilia: string; // Evolution Metalizada
+  brand: string;   // PintyPlus
+  family: string;  // Basic, Evolution, Tech
 }

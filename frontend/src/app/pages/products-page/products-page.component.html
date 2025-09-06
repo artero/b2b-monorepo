@@ -150,7 +150,7 @@
   </mat-horizontal-stepper>
   <div
     class="step-actions"
-    *ngIf="addedProducts && stepper.selectedIndex === 0"
+    [class.is-visible]="addedProducts && stepper.selectedIndex === 0"
   >
     <button mat-raised-button color="primary" (click)="stepper.next()">
       {{ 'Order.ButtonConfirmOrder' | translate }}

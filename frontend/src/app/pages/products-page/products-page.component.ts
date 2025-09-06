@@ -97,15 +97,21 @@ export class ProductsPageComponent implements OnInit {
     this.isLoading = true;
     this.isEditable = false;
 
-    this.productsService.createOrder(ORDER).subscribe(() =>
-      this.emailService
-        .sendOrder({
-          ...ORDER,
-          TotalBoxes: this.getProductQuantity(),
-        })
-        .pipe(finalize(() => (this.isLoading = false)))
-        .subscribe(() => this.router.navigate(['/done']))
-    );
+    this.productsService.createOrder(ORDER)
+    .pipe(finalize(() => {
+      this.isLoading = false;
+      this.isEditable = true;
+    }))
+    .subscribe({
+      next: () => {
+        this.clearOrder();
+        this.router.navigate(['/done']);
+      },
+      error: (error) => {
+        console.error('Error creating order:', error);
+        // Aquí podrías mostrar un mensaje de error al usuario
+      }
+    });
   }
 
   onSearch() {
@@ -223,31 +229,33 @@ export class ProductsPageComponent implements OnInit {
   private setTotal(): number {
     return this.order && this.order.length
       ? this.order.reduce((total: number, p: ProductCart) => {
-          const uds = Number(p.UdsCaja) || 1;
+          const uds = Number(p.units_per_box) || 1;
 
-          return total + p.quantity * uds * p.PrecioConDescuento;
+          return total + p.quantity * uds * p.price;
         }, 0) || 0
       : 0;
   }
 
   private filterProducts(product: ProductCart) {
     return (
-      (product.Descripcion &&
-        product.Descripcion.toLowerCase().includes(
+      (product.name &&
+        product.name.toLowerCase().includes(
           this.search.toLowerCase()
         )) ||
-      (product.Codigo &&
-        product.Codigo.toLowerCase().includes(this.search.toLowerCase()))
+      (product.code &&
+        product.code.toLowerCase().includes(this.search.toLowerCase())) ||
+      (product.color &&
+        product.color.toLowerCase().includes(this.search.toLowerCase()))
     );
   }
 
   private buildOrder(): Order {
-    const Lineas = [];
+    const lines = [];
 
     this.order.forEach((product: ProductCart) =>
-      Lineas.push({
-        CodArt: product.Codigo,
-        Unidades: product.quantity * (Number(product.UdsCaja) || 1),
+      lines.push({
+        code: product.code,
+        quantity: product.quantity * (Number(product.units_per_box) || 1),
       })
     );
 
@@ -256,14 +264,14 @@ export class ProductsPageComponent implements OnInit {
       'dd-MM-yyyy'
     );
 
-    const Observaciones = outputObservaciones(
+    const observations = outputObservaciones(
       this.formConfirm.get('observations').value,
       dateTransform
     );
 
     return {
-      Observaciones,
-      Lineas,
+      observations,
+      lines,
     };
   }
 
@@ -347,5 +355,32 @@ export class ProductsPageComponent implements OnInit {
     });
 
     return order;
+  }
+
+  private clearOrder(): void {
+    if (this.products) {
+      this.products.forEach((family: ProductFamily) => {
+        if (family.products) {
+          family.products.forEach((product: ProductCart) => {
+            product.quantity = 0;
+          });
+        }
+      });
+    }
+
+    this.order = [];
+    this.addedProducts = 0;
+    this.total = 0;
+
+    if (this.formOrder) {
+      this.formOrder.reset();
+    }
+    if (this.formConfirm) {
+      this.formConfirm.reset();
+    }
+
+    if (this.products) {
+      this.localStorageService.setItem('products', this.products);
+    }
   }
 }
