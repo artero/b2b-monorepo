@@ -67,7 +67,12 @@ export class LoginPageComponent implements OnInit {
 
   private saveCurrentUser(result: boolean) {
     if (result) {
-      this.userService.getUser().subscribe(() => this.router.navigate(['/']));
+      // Los datos del usuario ya están guardados por DeviseTokenAuth
+      // No necesitamos hacer otra llamada al servidor
+      this.isLoading = false;
+      this.router.navigate(['/']);
+    } else {
+      this.isLoading = false;
     }
   }
 }
