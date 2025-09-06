@@ -1,0 +1,159 @@
+<loading *ngIf="isLoading"></loading>
+<div class="container-xl">
+  <mat-horizontal-stepper linear #stepper *ngIf="products" class="stepper">
+    <mat-step [completed]="addedProducts" [editable]="isEditable">
+      <ng-template matStepLabel>
+        {{ 'Order.Title' | translate }}
+        <span *ngIf="addedProducts" class="step-badge"
+          >{{ total | localeNumber }} €</span
+        >
+      </ng-template>
+
+      <div class="step-header">
+        <h1 class="step-header__title">
+          {{ 'Order.Title' | translate }}
+        </h1>
+        <p
+          class="step-header__description"
+          [innerHTML]="'Order.Description' | translate"
+        ></p>
+      </div>
+      <div class="search-bar dense-1">
+        <mat-form-field
+          subscriptSizing="dynamic"
+          class="search-bar__form-field"
+        >
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-label>{{ 'Order.Search' | translate }}</mat-label>
+          <input
+            matInput
+            [(ngModel)]="search"
+            [placeholder]="'Order.SearchPlaceholder' | translate"
+            (keyup)="onSearch()"
+            (change)="onSearch()"
+            type="search"
+            autocomplete="off"
+          />
+          @if (search) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="onClearSearch()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+      </div>
+
+      <div *ngFor="let brand of uniqueBrands">
+        <div
+          products-table
+          *ngIf="getProductsByBrand(brand).length"
+          [products]="getProductsByBrand(brand)"
+          (productsChange)="onChangeProducts()"
+        ></div>
+      </div>
+    </mat-step>
+
+    <mat-step [editable]="isEditable">
+      <ng-template matStepLabel>{{ 'Confirm.Title' | translate }}</ng-template>
+      <ng-container>
+        <div class="step-header">
+          <h1 class="step-header__title">
+            {{ 'Confirm.Title' | translate }}
+          </h1>
+          <p
+            class="step-header__description"
+            [innerHTML]="'Confirm.Description' | translate"
+          ></p>
+        </div>
+        <ng-container>
+          <div
+            order-table
+            #orderTable
+            [(order)]="order"
+            [total]="total"
+            (orderChange)="onChangeProducts()"
+          ></div>
+          <form
+            (ngSubmit)="onSubmit()"
+            [formGroup]="formConfirm"
+            class="order-form"
+          >
+            <mat-form-field class="order-form__observations">
+              <textarea
+                matInput
+                matAutosize
+                [placeholder]="'Confirm.Notes' | translate"
+                formControlName="observations"
+                matAutosizeMinRows="5"
+                matAutosizeMaxRows="10"
+              ></textarea>
+            </mat-form-field>
+            <mat-form-field class="order-form__shipping">
+              <input
+                matInput
+                formControlName="shipping"
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="picker"
+                [placeholder]="'Confirm.ETD' | translate"
+                required
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="formConfirm.invalid">{{
+                'Confirm.DateInvalid' | translate
+              }}</mat-error>
+            </mat-form-field>
+
+            <p class="order-form__urgent">
+              <mat-checkbox formControlName="urgent" (change)="onUrgent()">
+                {{ 'Confirm.MarkIfUrgent' | translate }}
+              </mat-checkbox>
+            </p>
+
+            <button
+              mat-raised-button
+              color="primary"
+              class="mr-2"
+              type="submit"
+            >
+              {{ 'Confirm.Confirm' | translate }}
+            </button>
+            <button
+              mat-raised-button
+              (click)="stepper.previous()"
+              color="basic"
+              class="mr-2"
+              type="button"
+            >
+              {{ 'Confirm.ModifyOrder' | translate }}
+            </button>
+            <button
+              mat-raised-button
+              color="basic"
+              type="button"
+              (click)="onPrint()"
+            >
+              {{ 'Confirm.DownloadPdf' | translate }}
+            </button>
+          </form>
+        </ng-container>
+      </ng-container>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <div
+    class="step-actions"
+    *ngIf="addedProducts && stepper.selectedIndex === 0"
+  >
+    <button mat-raised-button color="primary" (click)="stepper.next()">
+      {{ 'Order.ButtonConfirmOrder' | translate }}
+    </button>
+  </div>
+</div>

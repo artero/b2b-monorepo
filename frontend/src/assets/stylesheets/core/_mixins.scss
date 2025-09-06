@@ -1,0 +1,76 @@
+@use 'sass:math';
+
+@mixin last-margin-0 {
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@mixin grid-template-childs($childs) {
+  // $elements: ' ';
+  // @for $i from 1 through $childs {
+  //   $elements: $elements + "'p#{$i}'" + ' ';
+  // }
+  // grid-template: unquote($elements) auto / 1fr;
+
+  @for $i from 1 through $childs {
+    > :nth-child(#{$i}) {
+      grid-area: p#{$i};
+    }
+  }
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin focus($color: $secondary) {
+  border-color: $color;
+  outline: 0;
+  box-shadow: 0 0 0 1px rgba($black, .1);
+}
+
+@mixin aspect-ratio(
+  $width,
+  $height,
+  $child-selector: '> *',
+  $pseudo-element: '&::after'
+) {
+  $placeholders: false !default;
+
+  --ratio-padding: #{math.div($height, $width) * 100%};
+  position: relative;
+
+  #{$pseudo-element} {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: var(--ratio-padding);
+  }
+
+  #{$child-selector} {
+    @if $placeholders {
+      @extend %position-absolute-cover;
+    } @else {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+
+@mixin media-ie {
+  @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    @content;
+  }
+}
+
+@mixin unify-parent($child) {
+  @at-root #{selector-unify(&, $child)} {
+    @content;
+  }
+}

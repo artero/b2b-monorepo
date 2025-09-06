@@ -1,0 +1,35 @@
+.search-bar {
+  position: sticky;
+  top: 0;
+  z-index: z-index('search');
+  height: $search-bar-size;
+  padding-top: 0;
+  padding-right: spacer(2);
+  padding-left: spacer(2);
+  font-size: var(--font-size-xs);
+  color: $white;
+  text-align: center;
+  background-color: $gray-800;
+
+  --mdc-filled-text-field-container-color: transparent;
+  --mdc-filled-text-field-label-text-color: white;
+  --mdc-filled-text-field-focus-label-text-color: rgb(255 255 255 / 50%);
+  --mat-form-field-state-layer-color: rgb(255 255 255 / 50%);
+  --mat-form-field-input-text-placeholder-color: white;
+  --mdc-filled-text-field-input-text-color: white;
+  --mdc-filled-text-field-input-text-placeholder-color: rgb(255 255 255 / 50%);
+  --mdc-filled-text-field-indicator-color: var(--color-link);
+  --mdc-filled-text-field-focus-active-indicator-color: var(--color-link);
+  --mdc-filled-text-field-disabled-active-indicator-color: rgb(0 0 0 / 100%);
+  --mdc-filled-text-field-hover-active-indicator-color: var(--color-primary);
+  --mdc-filled-text-field-active-indicator-color: rgb(255 255 255 / 50%);
+  --mat-mdc-form-field-label-offset-x: -6px;
+
+  &__form-field {
+    width: 250px;
+  }
+
+  input[type='search']::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}

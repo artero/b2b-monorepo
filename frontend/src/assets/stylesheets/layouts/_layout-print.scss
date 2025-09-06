@@ -1,0 +1,23 @@
+.layout-print {
+  $layout-width: 1250px;
+  width: $layout-width;
+
+  .nvs-page {
+    width: $layout-width;
+  }
+
+  .mat-drawer-container {
+    position: relative;
+  }
+
+  .mat-horizontal-content-container {
+    padding: 0;
+  }
+
+  #order-print {
+    width: $layout-width;
+    height: 50000px;
+    margin-top: auto;
+    overflow-x: initial !important; //stylelint-disable-line
+  }
+}

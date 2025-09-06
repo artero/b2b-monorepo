@@ -1,0 +1,73 @@
+{
+  "Common": {
+    "Amount": "Importe",
+    "Boxes": "Cajas",
+    "Format": "Presentación",
+    "Items": "Artículos",
+    "Name": "Nombre",
+    "Range": "Familia",
+    "UnitPrice": "Precio Unidad",
+    "Units": "Unidades"
+  },
+  "Login": {
+    "Button": "ACCESO",
+    "DownloadText": "Para una mejor experiencia descargue la aplicación de escritorio para <a href='https: //www.pintyplus.com/ftp pintyplus-b2b-windows.zip' class='link'>Windows</a> o para <a href='https: //www.pintyplus.com/ftp/pintyplus-b2b-mac.zip' class='link'>Mac</a>",
+    "ErrorAuth": "Password o usuario incorrecto",
+    "Password": "Contraseña",
+    "WelcomeText": "Bienvenido a la tienda B2B de Novasolspray. Si no dispones de contraseña contacta con nosotros al <a class='link text-nowrap' href='tel:+34977677305'>+34 977 677 305</a> o enviando un correo el electrónico a <a class='link' href='mailto:novasol@novasolspray.com?subject=NVS B2B Solicitar contraseña'>novasol@novasolspray.com</a>."
+  },
+  "Order": {
+    "ButtonConfirmOrder": "CONFIRMAR PEDIDO",
+    "ChangeQuantity": "{{ quantity }} cajas de {{ units }} unidades.",
+    "Description": "Listado de artículos organizados por familias, has de añadir al menos un elemento para poder confirmar pedido.",
+    "Search": "Buscar",
+    "SearchPlaceholder": "Código o descripción",
+    "Title": "Orden de compra"
+  },
+  "Confirm": {
+    "Confirm": "Confirmar",
+    "DateInvalid": "La fecha es obligatoría",
+    "Description": "Si deseas cambiar alguno de los datos de facturación, ponte en contacto con nosotros desde el teléfono <a class='link text-nowrap' href='tel:+34977677305'>+34 977 677 305</a> o enviando un correo el electrónico a <a class='link' href='mailto:novasol@novasolspray.com?subject=NVS B2B Facturación'>novasol@novasolspray.com </a>.",
+    "DownloadPdf": "Descargar PDF",
+    "ETD": "Preferencia fecha",
+    "InputBoxes": " de {{ u }} u.",
+    "MarkIfUrgent": "Entrega urgente",
+    "ModifyOrder": "Modificación pedido",
+    "Notes": "Observaciones",
+    "OrderPrint": "Pedido",
+    "Title": "Confirmar pedido"
+  },
+  "Done": {
+    "ButtonLogout": "Desconectar",
+    "ButtonOther": "Realizar otro pedido",
+    "Description": "En breve nos pondremos en contacto con usted, para confirmar la fecha de envío y enviarle la factura legal.",
+    "Title": "Su pedido se ha enviado correctamente"
+  },
+  "NewPassword": {
+    "Change": "CAMBIAR CONTRASEÑA",
+    "Checkbox": "Aceptar la <a class='link' href='https://www.pintyplus.com/politica-de-cookies/' target='_blank' >política de cookies</a>, <a class='link' href='https://www.pintyplus.com/politica-de-privacidad/' target='_blank'>política de privacidad</a>, envío de novedades y ofertas. *",
+    "Description": "Introduce la contraseña que utilizaras para acceder a nuestro servicio, una vez completado te mandaremos a la página de acceso para que introduzcas tu correo y la nueva contraseña para acceder.",
+    "ErrorCookies": "Has de aceptar nuestras política de cookies, política de privacidad, envío de novedades y ofertas.",
+    "ErrorPasswords": "Las contraseñas no coinciden",
+    "ErrorToken": "El token es incorrecto ponte en contacto con nosotros para pedir uno nuevo",
+    "New": "Contraseña nueva",
+    "NoToken": "Necesitas un token válido para cambiar la contraseña, contacta con nosotros al <a class='link text-nowrap' href='tel:+34977677305'>+34 977 677 305</a> o enviando un correo el electrónico a <a class='link' href='mailto:novasol@novasolspray.com?subject=NVS B2B Solicitar contraseña'>novasol@novasolspray.com</a>.",
+    "Repeat": "Repite la contraseña"
+  },
+  "ACEITES": "ACEITES",
+  "ANTICALORICA": "ANTICALORICA",
+  "BOLSA PULSADOR": "BOLSA PULSADOR",
+  "BRILLO": "BRILLO",
+  "EFECTOS METALIZADOS": "EFECTOS METALIZADOS",
+  "FLUOR": "FLUOR",
+  "IMPRIMACIONES": "IMPRIMACIONES",
+  "LIMPIADOR": "LIMPIADOR",
+  "MARCADORES": "MARCADORES",
+  "MATE": "MATE",
+  "METALIZADOS": "METALIZADOS",
+  "PISTOLA": "PISTOLA",
+  "PULSADORES": "PULSADORES",
+  "SATINADOS": "SATINADOS",
+  "SILUETAS": "SILUETAS",
+  "VARIOS": "VARIOS"
+}

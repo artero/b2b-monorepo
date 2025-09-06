@@ -1,0 +1,62 @@
+/* stylelint-disable declaration-no-important */
+$icons: (
+  'icon-angle-bottom': '\f101',
+  'icon-angle-left': '\f102',
+  'icon-angle-right': '\f103',
+  'icon-angle-top': '\f104',
+  'icon-arrow-bottom': '\f105',
+  'icon-arrow-left': '\f106',
+  'icon-arrow-right': '\f107',
+  'icon-arrow-top': '\f108',
+  'icon-close': '\f109',
+  'icon-filter': '\f10a',
+  'icon-logout': '\f10b',
+  'icon-mail': '\f10c',
+  'icon-search': '\f10d',
+  'icon-user': '\f10e'
+);
+
+%icon {
+  display: inline-block;
+  font-family: 'nvs icons', sans-serif !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  font-variant: normal;
+  line-height: 1;
+  text-transform: none;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@each $name, $icon in $icons {
+  .#{$name},
+  %#{$name} {
+    @extend %icon;
+
+    &::before {
+      content: $icon;
+    }
+  }
+}
+
+.icon-color,
+%icon-color {
+  display: inline-block;
+  width: 1.8em;
+  height: 1.8em;
+  border: 1px solid $white;
+  border: 1px solid rgba($black, .2);
+  border-radius: 50%;
+
+  &.is-metal {
+    z-index: 2;
+    background:
+      linear-gradient(
+        rgba($black, .1),
+        hsla(0, 0%, 100%, .4),
+        rgba($black, .2)
+      );
+    border-radius: 50%;
+  }
+}

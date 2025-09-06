@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-user</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-user" fill="#000000">
+            <path d="M50.5,9 C39.0400914,9 29.75,18.2900914 29.75,29.75 C29.75,41.2099086 39.0400914,50.5 50.5,50.5 C61.9599086,50.5 71.25,41.2099086 71.25,29.75 C71.25,24.2467578 69.0638456,18.9689141 65.1724657,15.0775343 C61.2810859,11.1861544 56.0032422,9 50.5,9 Z" id="Trazado_13-path"></path>
+            <path d="M50.5,55.6875 C36.649375,55.6875 9,62.63875 9,76.4375 L9,92 L92,92 L92,76.4375 C92,62.63875 64.350625,55.6875 50.5,55.6875 Z" id="Trazado_13-path"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,21 @@
+.step-actions {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: $sidebar-size;
+  z-index: z-index(actions);
+  padding: spacer(1);
+  text-align: right;
+  background-color: rgba($primary, .8);
+  animation: AnimationStepActions .2s ease-out .5s both;
+}
+
+@keyframes AnimationStepActions {
+  from {
+    bottom: -50px;
+  }
+
+  to {
+    bottom: 0;
+  }
+}

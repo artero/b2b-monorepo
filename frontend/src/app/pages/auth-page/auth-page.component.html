@@ -1,0 +1,34 @@
+<mat-sidenav-container fullscreen [@enterLeaveFade]>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <div class="nvs-filters">
+      FILTERS
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content class="s-main">
+    <div class="nav-bar" @navBar>
+      <div class="nav-bar__item">
+        <div class="nav-bar__logo"></div>
+      </div>
+      <button class="nav-bar__item" (click)="logout()">
+        <i class="icon-logout"></i>
+      </button>
+      <ng-container *ngIf="getCurrentLang() == 'es'">
+        <button class="nav-bar__item" (click)="changeLang('en')">
+          EN
+        </button>
+      </ng-container>
+      <ng-container *ngIf="getCurrentLang() == 'en'">
+        <button class="nav-bar__item" (click)="changeLang('es')">
+          ES
+        </button>
+      </ng-container>
+
+      <!-- <button class="nav-bar__item" (click)="sidenav.toggle()">
+        <i class="icon-filter"></i>
+      </button> -->
+    </div>
+    <main class="h-100">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

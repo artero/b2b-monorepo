@@ -1,0 +1,17 @@
+.step-header {
+  padding-right: spacer(3);
+  padding-bottom: spacer(2);
+  padding-left: spacer(3);
+  margin-bottom: spacer(3);
+  background-color: $white;
+
+  &__title {
+    margin-bottom: 0;
+    background-color: $white;
+    @extend %h1;
+  }
+
+  &__description {
+    max-width: 500px;
+  }
+}

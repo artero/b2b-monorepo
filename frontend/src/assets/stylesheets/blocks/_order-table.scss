@@ -1,0 +1,68 @@
+.order-table {
+  width: 100%;
+  min-width: 1024px;
+  height: auto;
+  table-layout: fixed;
+  border-spacing: 0;
+
+  input[type='number'] {
+    @extend %input-number;
+    max-width: 3em;
+  }
+
+  tfoot td {
+    font-weight: $font-weight-bold;
+    border-bottom: 0;
+  }
+
+  $columns: (
+    'color': 58px,
+    'family': 150px,
+    'units': 70px,
+    'quantity': 110px,
+    'price': 100px,
+    'amount': 100px,
+    'presentation': 140px
+  );
+
+  @each $name, $size in $columns {
+    .mat-column-#{$name} {
+      width: $size;
+    }
+  }
+
+  .mat-column-name {
+    min-width: 250px;
+  }
+
+  .mat-column-info {
+    font-size: var(--font-size-xs);
+    font-weight: $font-weight-normal;
+    text-align: right;
+
+    h6 {
+      display: inline-block;
+      margin-right: 1em;
+      font-weight: $font-weight-bold;
+      color: $gray-800;
+    }
+
+    dl {
+      display: inline-block;
+    }
+
+    dt {
+      display: inline-block;
+      margin-right: .25em;
+    }
+
+    dd {
+      display: inline-block;
+      font-weight: $font-weight-semibold;
+
+      &:not(:last-child) {
+        margin-right: 1em;
+      }
+    }
+  }
+}

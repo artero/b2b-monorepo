@@ -1,0 +1,48 @@
+.alert,
+%alert {
+  padding: .5em 1em;
+  margin-bottom: 1.5rem;
+  font-weight: $font-weight-normal;
+  color: $primary;
+  background-color: rgba($primary, .04);
+  border: 1px solid $primary;
+  border-radius: 3px;
+
+  a {
+    font-weight: $font-weight-bold;
+    text-decoration: underline;
+  }
+}
+
+.alert-danger {
+  @extend %alert;
+  color: $warning;
+  background-color: rgba($warning, .04);
+  border-color: darken($warning, 5%);
+}
+
+.alert-notification {
+  @extend %alert;
+  color: $white;
+  background-color: $secondary;
+  border-color: darken($secondary, 5%);
+}
+
+.alert-success {
+  @extend %alert;
+  color: $white;
+  background-color: $success;
+  border-color: darken($success, 5%);
+}
+
+.alert-close {
+  float: right;
+  padding: .5em;
+  margin-top: -.5em;
+  margin-right: -.5em;
+
+  &::before {
+    @extend %icon;
+    content: map-get($icons, icon-close);
+  }
+}

@@ -1,0 +1,135 @@
+<table
+  *ngIf="products"
+  mat-table
+  [dataSource]="products"
+  multiTemplateDataRows
+  class="products-table"
+>
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef>
+      <i class="icon-angle-bottom"></i>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="family">
+    <th
+      mat-header-cell
+      *matHeaderCellDef="let element"
+      class="font-weight-bold font-size-base"
+    >
+      {{ getBrand(products) }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.family | translate }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="presentation">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ 'Common.Format' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let element" class="text-transform-lowercase">
+      {{ translatePromotions(element.presentations).join(', ') }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="total">
+    <th mat-header-cell *matHeaderCellDef class="text-right">
+      {{ 'Common.Items' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let element" class="text-right">
+      {{ element.total }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      <div
+        [@enterLeaveSlideDown]
+        *ngIf="element.detailRow"
+        class="products-table__expandable"
+      >
+        <div class="product-form">
+          <div class="product-form__items">
+            <ng-container *ngFor="let presentation of element.presentations">
+              <h3>{{ presentation | translate }}</h3>
+              <div
+                class="product-item"
+                *ngFor="
+                  let product of getPresentationProducts(
+                    presentation,
+                    element.products
+                  )
+                "
+              >
+                <div
+                  *ngIf="product.HexaColor"
+                  [style.background-color]="hexColorPad(product.HexaColor)"
+                  [ngClass]="product.TipoColor ? 'is-' + product.TipoColor : ''"
+                  class="product-item__icon"
+                ></div>
+                <div class="product-item__input">
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    [value]="product.quantity"
+                    [matTooltip]="
+                      'Order.ChangeQuantity'
+                        | translate
+                          : {
+                              quantity: product.quantity,
+                              units: product.UdsCaja
+                            }
+                    "
+                    (input)="onChangeQuantity(product, $event)"
+                  />
+                </div>
+                <div class="product-item__title">
+                  <p>
+                    <strong>{{ product.Codigo }}</strong> -
+                    {{ formatDescription(product) }}
+                  </p>
+                  <p [class.color-black-50]="!product.quantity">
+                    <span class="font-size-xs"
+                      >({{ product.quantity }} {{ 'Common.Boxes' | translate }}
+                      {{ product.UdsCaja }} u. *
+                      {{ product.PrecioConDescuento | localeNumber }}€/u =
+                      {{ getTotal(product) | localeNumber }}€)</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="product-form__image">
+            <div
+              *ngIf="element.image"
+              [style.backgroundImage]="'url(' + element.image + ')'"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    matRipple
+    class="products-table__row"
+    [class.is-expanded]="row.detailRow"
+    (click)="toggleRow(row)"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="products-table__row-detail"
+  ></tr>
+</table>
