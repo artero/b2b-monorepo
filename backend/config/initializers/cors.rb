@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://localhost:4200"  # Angular development server
+    origins "http://localhost:4200", "http://localhost:4400"  # Angular development server
 
     resource "*",
       headers: :any,

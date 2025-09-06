@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://rds.novasolspray.com:443/',
+  apiUrl: 'http://localhost:3000/',
   domain: 'localhost',
 };
 

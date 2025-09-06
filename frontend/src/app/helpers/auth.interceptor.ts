@@ -30,10 +30,24 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private setAuthHeader() {
     let headers = new HttpHeaders();
-    const authToken = this.authenticationService.getToken();
-
-    if (authToken) {
-      headers = headers.append('authorization', 'Bearer ' + authToken);
+    
+    // Use DeviseTokenAuth headers if available
+    if (this.authenticationService.hasDeviseTokenAuthTokens()) {
+      const accessToken = this.authenticationService.getAccessToken();
+      const clientToken = this.authenticationService.getClientToken();
+      const uidToken = this.authenticationService.getUidToken();
+      
+      if (accessToken && clientToken && uidToken) {
+        headers = headers.append('access-token', accessToken);
+        headers = headers.append('client', clientToken);
+        headers = headers.append('uid', uidToken);
+      }
+    } else {
+      // Fallback to legacy Bearer token if available
+      const authToken = this.authenticationService.getToken();
+      if (authToken) {
+        headers = headers.append('authorization', 'Bearer ' + authToken);
+      }
     }
 
     return headers;
