@@ -60,7 +60,7 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = {
     host: ENV.fetch("RENDER_EXTERNAL_HOSTNAME", ENV.fetch("MAILER_HOST", "example.com")),
-    protocol: 'https'
+    protocol: "https"
   }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
@@ -84,12 +84,12 @@ Rails.application.configure do
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   allowed_hosts = ENV.fetch("ALLOWED_HOSTS", "").split(",").map(&:strip).reject(&:empty?)
-  
+
   # Add Render hostname automatically
   if ENV["RENDER_EXTERNAL_HOSTNAME"]
     allowed_hosts << ENV["RENDER_EXTERNAL_HOSTNAME"]
   end
-  
+
   config.hosts = allowed_hosts if allowed_hosts.any?
 
   # Skip DNS rebinding protection for the default health check endpoint.
