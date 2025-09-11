@@ -25,19 +25,19 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+# Solid adapters configurations for production  
+cache:
+  url: <%= ENV.fetch("DATABASE_URL") %>
+  adapter: postgresql
+  migrations_paths: db/cache_migrate
   
-  # Solid adapters share the same database
-  cache:
-    url: <%= ENV.fetch("DATABASE_URL") %>
-    adapter: postgresql
-    migrations_paths: db/cache_migrate
-    
-  queue:
-    url: <%= ENV.fetch("DATABASE_URL") %>
-    adapter: postgresql  
-    migrations_paths: db/queue_migrate
-    
-  cable:
-    url: <%= ENV.fetch("DATABASE_URL") %>
-    adapter: postgresql
-    migrations_paths: db/cable_migrate
+queue:
+  url: <%= ENV.fetch("DATABASE_URL") %>
+  adapter: postgresql  
+  migrations_paths: db/queue_migrate
+  
+cable:
+  url: <%= ENV.fetch("DATABASE_URL") %>
+  adapter: postgresql
+  migrations_paths: db/cable_migrate
