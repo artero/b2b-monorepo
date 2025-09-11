@@ -1,0 +1,29 @@
+databases:
+  - name: b2b-postgres
+    databaseName: b2b_production
+    user: b2b_user
+
+services:
+  - type: web
+    name: b2b-rails-app
+    runtime: ruby
+    plan: starter
+    rootDir: backend
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bin/rails server"
+    preDeployCommand: "bin/rails db:migrate"
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: true
+      - key: RAILS_LOG_TO_STDOUT
+        value: true
+      - key: WEB_CONCURRENCY
+        value: 2
+      - key: DATABASE_URL
+        fromDatabase:
+          name: b2b-postgres
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
