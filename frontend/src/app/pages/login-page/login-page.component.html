@@ -3,11 +3,12 @@
   <mat-card class="p-5">
     <div class="text-center mv-4">
       <a
-        class="big-logo mb-3"
-        href="https://www.pintyplus.com/"
+        class="big-logo"
+        href="https://www.european-aerosols.com/"
+        title="European Aerosols"
         target="_blank"
       >
-        <img src="assets/images/pintyplus-b2b-600.png" />
+        <img src="assets/images/b2b-european-aerosols.jpg" />
       </a>
       <p [innerHTML]="'Login.WelcomeText' | translate"></p>
     </div>
@@ -40,7 +41,7 @@
         [disabled]="isLoading"
         mat-raised-button
         color="primary"
-        class="w-100 mt-3"
+        class="w-100 mt-1 is-large"
       >
         <span *ngIf="isLoading" class="spinner-border mr-1"></span>
         {{ 'Login.Button' | translate }}

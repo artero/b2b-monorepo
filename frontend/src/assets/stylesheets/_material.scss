@@ -10,20 +10,20 @@
 //#e7ebf4,#b5bfdb,#8493c2,#5266a8,#203a8f,#1d3481,#1a2f73,#162965,#132357
 
 $mat-blue-nvs: (
-  50: #f3f5fa,
-  100: #e7ebf4,
-  200: #b5bfdb,
-  300: #8493c2,
-  400: #5266a8,
-  500: #203a8f,
-  600: #1d3481,
-  700: #1a2f73,
-  800: #162965,
-  900: #132357,
-  A100: #8c9eff,
-  A200: #536dfe,
-  A400: #3d5afe,
-  A700: #304ffe,
+  50: #f0f1f7,
+  100: #e1e3ee,
+  200: #b8bdd6,
+  300: #8f97be,
+  400: #6671a6,
+  500: #091354,
+  600: #08114c,
+  700: #070f44,
+  800: #060d3c,
+  900: #050b34,
+  A100: #7986ff,
+  A200: #4d5cff,
+  A400: #3d4aff,
+  A700: #2d3aff,
   contrast: (
     50: rgba(black, .87),
     100: rgba(black, .87),
@@ -41,6 +41,39 @@ $mat-blue-nvs: (
     A700: white
   )
 );
+$mat-cyan-nvs: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2979ff,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff,
+  contrast: (
+    50: rgba(black, .87),
+    100: rgba(black, .87),
+    200: rgba(black, .87),
+    300: rgba(black, .87),
+    400: rgba(black, .87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, .87),
+    A200: white,
+    A400: white,
+    A700: white
+  )
+);
+
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -51,7 +84,7 @@ $mat-blue-nvs: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $nvs-b2b-primary: mat.define-palette($mat-blue-nvs, 500, 200, 700);
-$nvs-b2b-accent: mat.define-palette(mat.$blue-palette, 'A200', 'A100', 'A400');
+$nvs-b2b-accent: mat.define-palette($mat-cyan-nvs, 500, 200, 700);
 
 // The warn palette is optional (defaults to red).
 $nvs-b2b-warn: mat.define-palette(mat.$red-palette);
@@ -120,5 +153,13 @@ td.mat-mdc-footer-cell:last-of-type {
   .mat-mdc-cell {
     padding-right: spacer(1);
     padding-left: spacer(1);
+  }
+}
+
+.mdc-button {
+  &.is-large {
+    min-height: 48px;
+    padding: 12px 24px;
+    font-size: 16px;
   }
 }

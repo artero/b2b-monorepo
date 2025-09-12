@@ -1,6 +1,6 @@
 <loading *ngIf="isLoading"></loading>
 <div class="container-xl">
-  <mat-horizontal-stepper linear #stepper *ngIf="products" class="stepper">
+  <mat-horizontal-stepper linear #stepper *ngIf="products" class="stepper" color="accent">
     <mat-step [completed]="addedProducts" [editable]="isEditable">
       <ng-template matStepLabel>
         {{ 'Order.Title' | translate }}
@@ -152,7 +152,7 @@
     class="step-actions"
     [class.is-visible]="addedProducts && stepper.selectedIndex === 0"
   >
-    <button mat-raised-button color="primary" (click)="stepper.next()">
+    <button mat-raised-button color="accent" (click)="stepper.next()">
       {{ 'Order.ButtonConfirmOrder' | translate }}
     </button>
   </div>

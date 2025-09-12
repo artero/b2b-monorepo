@@ -5,7 +5,7 @@
   z-index: 1;
   width: $sidebar-size;
   color: $white;
-  background-color: map-get($mat-blue-nvs, 900);
+  background-color: map-get($mat-blue-nvs, 500);
 
   &__item {
     display: flex;
@@ -28,10 +28,10 @@
     width: 90%;
     height: 90%;
     background-color: $white;
-    background-image: url('~assets/images/nvs-logo.png');
+    background-image: url('~assets/images/b2b-european-aerosols.jpg');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 80%;
+    background-size: 110%;
     border-radius: 50%;
   }
 
