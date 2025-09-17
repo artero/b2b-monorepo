@@ -4,10 +4,6 @@ ActiveAdmin.register User do
   # Menu configuration
   menu priority: 3, label: "Users"
 
-  scope_to do
-    User.with_business_partner
-  end
-
   # Scopes for filtering
   scope :all, default: true
   scope :active, -> { User.active }
@@ -126,6 +122,11 @@ ActiveAdmin.register User do
 
   # Controller customizations
   controller do
+    # Apply default scope for performance
+    def scoped_collection
+      super.with_business_partner
+    end
+
     def create
       # Use the custom method that doesn't require a password
       @user = User.create_without_password(permitted_params[:user])

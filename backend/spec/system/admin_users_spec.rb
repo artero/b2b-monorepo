@@ -12,9 +12,9 @@ RSpec.describe 'Admin Users Management', type: :system do
 
     expect(page).to have_current_path(admin_root_path)
 
-    visit admin_admin_users_path
+    visit admin_system_admins_path
 
-    expect(page).to have_current_path(admin_admin_users_path)
-    expect(page).to have_content("Admin Users")
+    expect(page).to have_current_path(admin_system_admins_path)
+    expect(page).to have_content("System Admins")
   end
 end
