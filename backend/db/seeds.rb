@@ -89,12 +89,12 @@ end
 if Rails.env.production?
   admin_email = ENV.fetch('ADMIN_EMAIL', 'admin@example.com')
   admin_password = ENV.fetch('ADMIN_PASSWORD', 'changeme123!')
-  
+
   AdminUser.find_or_create_by!(email: admin_email) do |user|
     user.password = admin_password
     user.password_confirmation = admin_password
     user.super_admin = true
   end
-  
+
   puts "✅ Admin user created: #{admin_email}"
 end

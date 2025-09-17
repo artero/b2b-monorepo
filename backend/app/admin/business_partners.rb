@@ -4,10 +4,6 @@ ActiveAdmin.register BusinessPartner do
   # Menu configuration
   menu priority: 2, label: "Business Partners"
 
-  scope_to do
-    BusinessPartner.with_users
-  end
-
   # Filters
   filter :name
   filter :ln_id
@@ -86,8 +82,13 @@ ActiveAdmin.register BusinessPartner do
     f.actions
   end
 
-  # Custom action to prevent deletion if has users
+  # Custom controller actions
   controller do
+    # Apply default scope for performance
+    def scoped_collection
+      super.with_users
+    end
+
     def destroy
       if resource.users.any?
         flash[:error] = "Cannot delete business partner with associated users. Please remove or reassign users first."

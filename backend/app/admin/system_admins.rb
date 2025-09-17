@@ -1,5 +1,7 @@
-ActiveAdmin.register AdminUser do
+ActiveAdmin.register AdminUser, as: "SystemAdmin" do
   permit_params :email, :password, :password_confirmation, :super_admin
+
+  menu label: "System Admins", priority: 1
 
   index do
     selectable_column

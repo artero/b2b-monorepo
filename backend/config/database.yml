@@ -21,23 +21,50 @@ test:
 
 # Production configuration using DATABASE_URL from Render
 production:
-  url: <%= ENV.fetch("DATABASE_URL") %>
+  url: <%= ENV.fetch("DATABASE_URL", "postgresql://postgres:password@localhost:5432/b2b_monorepo_production") %>
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-# Solid adapters configurations for production  
+# Solid adapters configurations
 cache:
-  url: <%= ENV.fetch("DATABASE_URL") %>
-  adapter: postgresql
-  migrations_paths: db/cache_migrate
-  
+  development:
+    <<: *default
+    database: b2b_monorepo_cache_development
+    migrations_paths: db/cache_migrate
+  test:
+    <<: *default
+    database: b2b_monorepo_cache_test
+    migrations_paths: db/cache_migrate
+  production:
+    url: <%= ENV.fetch("DATABASE_URL", "postgresql://postgres:password@localhost:5432/b2b_monorepo_cache_production") %>
+    adapter: postgresql
+    migrations_paths: db/cache_migrate
+
 queue:
-  url: <%= ENV.fetch("DATABASE_URL") %>
-  adapter: postgresql  
-  migrations_paths: db/queue_migrate
-  
+  development:
+    <<: *default
+    database: b2b_monorepo_queue_development
+    migrations_paths: db/queue_migrate
+  test:
+    <<: *default
+    database: b2b_monorepo_queue_test
+    migrations_paths: db/queue_migrate
+  production:
+    url: <%= ENV.fetch("DATABASE_URL", "postgresql://postgres:password@localhost:5432/b2b_monorepo_queue_production") %>
+    adapter: postgresql
+    migrations_paths: db/queue_migrate
+
 cable:
-  url: <%= ENV.fetch("DATABASE_URL") %>
-  adapter: postgresql
-  migrations_paths: db/cable_migrate
+  development:
+    <<: *default
+    database: b2b_monorepo_cable_development
+    migrations_paths: db/cable_migrate
+  test:
+    <<: *default
+    database: b2b_monorepo_cable_test
+    migrations_paths: db/cable_migrate
+  production:
+    url: <%= ENV.fetch("DATABASE_URL", "postgresql://postgres:password@localhost:5432/b2b_monorepo_cable_production") %>
+    adapter: postgresql
+    migrations_paths: db/cable_migrate
